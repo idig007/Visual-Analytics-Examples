@@ -74,14 +74,7 @@ document.addEventListener("DOMContentLoaded", function() {
       {
         name: "id",
         label: "id",
-        type: "number",
-        usage: "categorical",
-        format: {
-          name: "BEST",
-          width: 12,
-          precision: 0,
-          formatString: "BEST12."
-        }
+        type: "string"
       }
     ]
   }; // Sample data message to render graph outside of VA for debugging
@@ -131,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (
       !va.contentUtil.validateRoles(
         messageFromVA,
-        ["string", "number"],
+        ["string", "string"],
         ["number"]
       )
     ) {
