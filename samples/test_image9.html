@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en"  style='width:100%; height:100%;'>
+    <head>
+        <meta charset="utf-8">
+        <title>Book Images</title>
+        <!-- Import D3.js -->
+        <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+
+        <!-- Import utilities -->
+        <script type='text/javascript' src='../util/messagingUtil.js'></script>
+        <script type='text/javascript' src='../util/contentUtil.js'></script>
+        <body>
+        <!-- CSS code -->
+        <style type='text/css'>
+
+        html, body, svg {
+          /* overflow:hidden; */
+          margin:0px;
+          width:100%;
+          height:100%;
+        }
+        .grid {
+          display:grid;
+          grid-template-columns: repeat(auto-fill,minmax(98px, 1fr));
+          grid-auto-rows: auto;
+        };
+
+        .book {
+          border-radius:0px;
+          background-color:#808080;
+        }
+        </style>
+    </head>
+
+        <script type="text/javascript">
+        'use strict'; //best practice
+
+        //Sample data: To see data structure use jsonDataViewer.html with your data
+        var svg_id='book-image';
+
+        var sampleMessage= {
+          version: '1',
+          resultName: 'test',
+          rowCount: 10,
+          availableRowCount: 10,
+          data: [
+            [1,
+            'https://images.gr-assets.com/books/1447303603m/2767052.jpg'],
+            [2,
+             'https://images.gr-assets.com/books/1474154022m/3.jpg'],
+            [3,
+             'https://images.gr-assets.com/books/1361039443m/41865.jpg'],
+            [4,
+             'https://images.gr-assets.com/books/1361975680m/2657.jpg'],
+            [5,
+             'https://images.gr-assets.com/books/1490528560m/4671.jpg'],
+            [6,
+             'https://images.gr-assets.com/books/1360206420m/11870085.jpg'],
+            [7,
+             'https://images.gr-assets.com/books/1372847500m/5907.jpg'],
+            [8,
+             'https://images.gr-assets.com/books/1398034300m/5107.jpg'],
+            [9,
+             'https://images.gr-assets.com/books/1303390735m/960.jpg'],
+            [10,
+             'https://images.gr-assets.com/books/1320399351m/1885.jpg']
+            ],
+            columns: [
+              {
+                name: 'id',
+                label: 'id',
+                type: 'number'
+                },
+              {
+                name: 'image_url',
+                label: 'image_url',
+                type: 'string'
+              }
+            ]};
+
+            //Dynamic data variables
+            var va_message; //Data message received from VA
+            var va_result_name; //Result name required to send messages back to VA
+            var dataset; //Data to be parsed from VA data message
+
+            //Attach event for data message from VA
+            va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
+
+            //If not being rendered in iFrame (outside VA), render with sample data
+            if (!inIframe()) {
+              onDataReceived(sampleMessage);
+            }
+
+            //Take action on received data
+            function onDataReceived(messageFromVA){
+              // Initialize data variables
+              va_message=messageFromVA;
+              va_result_name=messageFromVA.resultName;
+
+            //Validate data roles
+            if (
+              !va.contentUtil.validateRoles(
+                messageFromVA,
+                ['number','string']
+              )
+            ){
+              va.messagingUtil.postInstructionalMessage(
+                va_result_name,
+                'D3 Image Grid expectes columns to be assigned in this order: \n' +
+                '1. ID (number)\n' +
+                '2. URL (string)\n' +
+                '3. Title (string), optional'
+              );
+              return;
+            }
+            //Restructure data from 2d array to array of objects
+            dataset=[];
+            for (let i=0; i < va_message.data.length; i++){
+              dataset.push({
+                id: va_message.data[i][0],
+                image_url: va_message.data[i][1],
+                index:i
+              });
+            }
+            }
+
+            //Creates a grid
+            var grid=d3.select('body')
+                       .append('section')
+                          .attr('id','grid')
+                          .attr('class','grid');
+
+            //Initialize chart if first draw, otherwise process data and update accordingly
+            if(d3.select('svg').empty()) {  //change from svg
+              drawElements();
+            }
+
+            //Draw elements for first time
+            function drawElements() {
+              //Return if data is not yet initialized
+              if (!dataset) {
+                return;
+              }
+
+            //Append SVG and save reference
+            //Adds div for each book
+            var books=grid.selectAll('section')
+                          .data(dataset)
+                          .enter()
+                          .append('section')
+                            .attr('id','book');
+
+            //Add image to each block
+            var image=books.append('svg')
+                           .append('svg:image')
+                           .attr('xlink:href', function(d) {
+                              return d.image_url;
+                            })
+;
+
+            //Adds image if data updates
+            image.enter()
+                 .append('div')
+                 .classed('svg:image', true)
+                 .merge(image)
+            }
+
+
+
+
+
+
+
+
+/********************* Helper Functions *************************************/
+    // Determine whether or not page is rendered in iFrame
+    function inIframe() {
+      try {
+        return window.self !== window.top;
+      } catch (e) {
+        return true;
+      }
+    };
+        </script>
+    </body>
+</html>
