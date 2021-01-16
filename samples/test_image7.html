@@ -167,10 +167,10 @@
 
             //Append SVG and save reference
             //Adds div for each books
-            var books=grid.selectAll('div')
+            var books=grid.selectAll('table')
                           .data(dataset)
                           .enter()
-                          .append('div')
+                          .append('table')
                             .attr('id','book');
 
             //Add image to each block
