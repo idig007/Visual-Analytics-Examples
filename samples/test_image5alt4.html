@@ -173,15 +173,18 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Append svg and save reference
     d3.select("body")
-      .selectAll("#" + SVG_ID)
+      .append('div')
+          .attr('id','grid')
+          .attr('class', 'grid')
+      .selectAll('div')
       .data([DATA])
       .enter()
-      .append("svg")
-      .attr("id", SVG_ID)
-      .attr('class',SVG_ID);
+      .append("div")
+      .attr("id", 'book')
+      .attr('class','book');
 
     SVG = d3
-      .select("#" + SVG_ID)
+      .select("#book")
       .attr("width", WIDTH)
       .attr("height", HEIGHT);
 
@@ -213,9 +216,9 @@ document.addEventListener("DOMContentLoaded", function() {
         return d.image_url;
       })
 
-      .attr('x', function(d,i) {
+/*      .attr('x', function(d,i) {
         return i*(IMAGE_WIDTH+EDGE_PADDING);
-      })
+      })*/
       ////////////WORKING HERE
       ;
   }
