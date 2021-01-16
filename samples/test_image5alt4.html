@@ -176,7 +176,8 @@ document.addEventListener("DOMContentLoaded", function() {
       .enter()
       .append("svg")
       .attr("id", SVG_ID)
-      .on("click", deselectAllElements);
+      //.on("click", deselectAllElements)
+      ;
 
     SVG = d3
       .select("#" + SVG_ID)
@@ -208,7 +209,6 @@ document.addEventListener("DOMContentLoaded", function() {
       .classed("selected", function(d) {
         return d.selected;
       })
-  //    .on("click", selectElement)
       .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
@@ -266,40 +266,14 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Deselect all on svg click
-  function deselectAllElements() {
+/*  function deselectAllElements() {
     // Deselect all elements
     d3.selectAll(".selectable").classed("selected", false);
 
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
-  }
-
-  // Handle selection on element
-  /*function selectElement() {
-
-    // If control is held toggle selected on click preserving array, otherwise select only clicked element
-    if (d3.event.ctrlKey) {
-      // Toggle selection on clicked element
-      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
-    } else {
-      // Deselect all elements
-      d3.selectAll(".selectable").classed("selected", false);
-
-      // Select clicked element
-      d3.select(this).classed("selected", true);
-    }
-
-    // Build array of selected elements
-    const selections = [];
-    d3.selectAll(".selectable").each(function(d) {
-      if (d3.select(this).classed("selected")) {
-        selections.push({ row: d.index });
-      }
-    });
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }*/
+
 });
 </script>
 </body>
