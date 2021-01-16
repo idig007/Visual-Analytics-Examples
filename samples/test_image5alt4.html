@@ -149,19 +149,23 @@
 
             //Creates a grid
             var grid=d3.select('body')
-                       .append('p')
+                       .append('svg')
                         /*  .attr('id','grid')
                           .attr('class','grid')*/;
 
 
             //Adds div for each books
-            var books=grid.selectAll('p')
+            var books=grid.selectAll('circle')
                           .data(dataset)
                           .enter()
-                          .append('p')
-                          .text(function(d) {
-                            return d.image_url;
-                          });
+                          .append('circle')
+                          .attr("cx", function(d, i) {
+                    						return (i * 50) + 25;
+                    					})
+                    				   .attr("cy", 50/2)
+                    				   .attr("r", function(d) {
+                    						return d.id;
+                    				   });
 
 
                           //  .attr('id','book');
