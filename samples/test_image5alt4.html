@@ -152,7 +152,7 @@ document.addEventListener("DOMContentLoaded", function() {
     for (let i = 0; i < VA_MESSAGE.data.length; i++) {
       DATA.push({
         image_url: VA_MESSAGE.data[i][0],
-        y: VA_MESSAGE.data[i][1],
+        id: VA_MESSAGE.data[i][1],
         selected: VA_MESSAGE.data[i][2],
         index: i
       });
@@ -224,7 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .domain([
         0,
         d3.max(DATA, function(d) {
-          return d.y;
+          return d.id;
         })
       ]);
 
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .domain([
         0,
         d3.max(DATA, function(d) {
-          return d.y;
+          return d.id;
         })
       ]);
 
@@ -286,13 +286,13 @@ document.addEventListener("DOMContentLoaded", function() {
         return X_SCALE(d.image_url);
       })
       .attr("y", function(d) {
-        return Y_SCALE(d.y);
+        return Y_SCALE(d.id);
       })
       .attr("width", function() {
         return X_SCALE.bandwidth();
       })
       .attr("height", function(d) {
-        return CHART_HEIGHT - Y_SCALE(d.y);
+        return CHART_HEIGHT - Y_SCALE(d.id);
       })
       .style("opacity", 1);
 
