@@ -224,10 +224,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("rect")
       .classed("data-bar", true)
-      .classed("selectable", true)
-      .classed("selected", function(d) {
-        return d.selected;
-      })
+
 
       .merge(DATA_BARS)
       .attr("x", function(d) {
@@ -294,10 +291,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("rect")
       .classed("data-bar", true)
-      .classed("selectable", true)
-      .classed("selected", function(d) {
-        return d.selected;
-      })
+
       .attr("x", function(d) {
         return X_SCALE(d.x);
       })
@@ -334,21 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Deselect all on svg click
-  function deselectAllElements() {
-    // Deselect all elements
-    d3.selectAll(".selectable").classed("selected", false);
 
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
-  }
-
-  // Handle selection on element
-  function selectElement() {
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
-  }
 });
 </script>
 </body>
