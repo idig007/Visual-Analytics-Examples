@@ -67,13 +67,13 @@ document.addEventListener("DOMContentLoaded", function() {
     ],
     columns: [
       {
-        name: "bi77",
-        label: "Type",
+        name: "image_url",
+        label: "image_url",
         type: "string"
       },
       {
-        name: "bi78",
-        label: "Frequency",
+        name: "id",
+        label: "id",
         type: "number",
         usage: "quantitative",
         aggregation: "totalCount",
@@ -245,19 +245,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       .attr('xlink:href', function(d) {
         return d.x;
-      })
-/*      .attr("x", function(d) {
-        return X_SCALE(d.x);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.y);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .attr("height", function(d) {
-        return CHART_HEIGHT;
-      })*/;
+      });
   }
 
   // Redraw data dependent elements on data change
@@ -319,22 +307,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .append('svg:image')
       .attr('xlink:href', function(d) {
         return d.x;
-      })
-/*
-      .attr("x", function(d) {
-        return X_SCALE(d.x);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.y);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .style("opacity", 0)
-      .on("click", selectElement)
-      .transition()
-      .duration(TRANS_TIME)
-      .style("opacity", 1)*/;
+      });
 
     DATA_BARS.exit()
       .classed("selected", false)
