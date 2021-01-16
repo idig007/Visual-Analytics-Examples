@@ -247,7 +247,7 @@ var DATA_BARS=grid.selectAll('div')
   function updateElements() {
 
     // Enter/Update/Exit data bars RECENT CHANGE
-    DATA_BARS = d3.selectAll("book").data(DATA, function(d) {
+    DATA_BARS = d3.selectAll("svg").data(DATA, function(d) {
       return d.image_url;
     });
 
