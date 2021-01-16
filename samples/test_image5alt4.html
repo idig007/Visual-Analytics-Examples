@@ -29,10 +29,6 @@ limitations under the License.
     height: 100%;
   }
 
-/*  .selectable.selected {
-    stroke-width: 2px;
-    stroke: black;
-  }*/
 </style>
 
 <script>
@@ -203,10 +199,9 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-    //  .classed("selectable", true)
-      .classed("selected", function(d) {
+/*      .classed("selected", function(d) {
         return d.selected;
-      })
+      })*/
       .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
@@ -222,29 +217,28 @@ document.addEventListener("DOMContentLoaded", function() {
       return d.image_url;
     });
 
-    DATA_BARS.classed("selected", function(d) {
+/*    DATA_BARS.classed("selected", function(d) {
       return d.selected;
     })
       .transition()
-      .duration(TRANS_TIME);
+      .duration(TRANS_TIME);*/
 
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-    //  .classed("selectable", true)
-      .classed("selected", function(d) {
+/*      .classed("selected", function(d) {
         return d.selected;
       })
-
+*/
       .append('svg:image')
       .attr('xlink:href', function(d) {
         return d.image_url;
       });
 
     DATA_BARS.exit()
-      .classed("selected", false)
+/*      .classed("selected", false)
       .transition()
-      .duration(TRANS_TIME)
+      .duration(TRANS_TIME)*/
       .attr("data-test", function() {
         return 0;
       })
