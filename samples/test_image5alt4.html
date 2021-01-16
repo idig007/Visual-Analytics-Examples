@@ -23,7 +23,7 @@ limitations under the License.
 <body>
   <style type="text/css">
   html, body, svg {
-    overflow: hidden;
+/*  overflow: hidden;*/
     margin: 0px;
     width: 100%;
     height: 100%;
@@ -172,7 +172,8 @@ document.addEventListener("DOMContentLoaded", function() {
       .data([DATA])
       .enter()
       .append("svg")
-      .attr("id", SVG_ID);
+      .attr("id", SVG_ID)
+      .attr('class',SVG_ID);
 
     SVG = d3
       .select("#" + SVG_ID)
@@ -207,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return d.image_url;
       })
 
-      .attr('x',function(d,i) {
+      .attr('x', function(d,i) {
         return i*(IMAGE_WIDTH+EDGE_PADDING);
       })
       ////////////WORKING HERE
