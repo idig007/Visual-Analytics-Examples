@@ -28,10 +28,15 @@ limitations under the License.
     width: 100%;
     height: 100%;
   }
-  .grid-container{
+  .grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
     grid-auto-rows: auto;
+  };
+
+  .book {
+    border-radius:0px;
+    background-color:#808080;
   }
 
 </style>
@@ -151,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Initialize chart if first draw, otherwise process data and update elements accordingly
-    if (d3.select("#" + SVG_ID).empty()) {
+    if (d3.select('div').empty()) {
       drawElements();
     } else {
       updateElements();
@@ -172,24 +177,25 @@ document.addEventListener("DOMContentLoaded", function() {
     CHART_HEIGHT = HEIGHT - EDGE_PADDING;
 
     // Append svg and save reference
-    d3.select("body")
+/*    var grid=d3.select("body")
       .append('div')
           .attr('id','grid')
-          .attr('class', 'grid')
-      .selectAll('div')
+          .attr('class', 'grid');
+
+
+    var books=grid.selectAll('div')
       .data([DATA])
       .enter()
       .append("div")
-      .attr("id", 'book')
-      .attr('class','book');
+      .attr("id", 'book');
 
     SVG = d3
-      .select("#book")
+      .select(".grid")
       .attr("width", WIDTH)
       .attr("height", HEIGHT);
 
     // Append/update chart-area group and save reference
-    SVG.selectAll(".g-chart-area")
+    SVG.selectAll("div")
       .data([DATA])
       .enter()
       .append("svg")
@@ -206,11 +212,25 @@ document.addEventListener("DOMContentLoaded", function() {
                             .data(DATA, function(d) {
                                 return d.image_url;
                             });
+*/
+//Creates a grid
+var grid=d3.select('body')
+           .append('div')
+              .attr('id','grid')
+              .attr('class','grid');
 
-    DATA_BARS.enter()
+
+//Adds div for each books
+var DATA_BARS=grid.selectAll('div')
+              .data(DATA)
+              .enter()
+              .append('div')
+                .attr('id','book');
+
+    DATA_BARS.append('svg')
       .append("svg:image")
-      .classed("book", true)
-      .merge(DATA_BARS)
+  //    .classed("book", true)
+    //  .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
         return d.image_url;
