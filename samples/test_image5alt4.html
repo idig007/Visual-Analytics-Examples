@@ -94,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Static dimension variables
   const TRANS_TIME = 500; // Duration of transitions
   const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
-  const Y_AXIS_WIDTH = 30; // Width allocated for y-axis
+
   const X_AXIS_HEIGHT = 30; // Height allocated for x-axis
 
   // Dynamic dimension variables
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", function() {
   let X_SCALE; // Band scale for x categories
   let Y_SCALE; // Linear scale for bar heights
   let X_AXIS; // X axis group data-join
-  let Y_AXIS; // Y axis group data join
+
   let DATA_BARS; // Data bars data-join
 
   /*************************************************** Setup Callback Functions ***************************************************/
@@ -179,7 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Calculate dimensions for graph based on container dimensions
     WIDTH = window.innerWidth;
     HEIGHT = window.innerHeight;
-    CHART_WIDTH = WIDTH - Y_AXIS_WIDTH - EDGE_PADDING;
+    CHART_WIDTH = WIDTH - EDGE_PADDING;
     CHART_HEIGHT = HEIGHT - X_AXIS_HEIGHT - EDGE_PADDING;
 
     // Append svg and save reference
@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .classed("g-chart-area", true)
       .attr(
         "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
+        "translate("  + EDGE_PADDING + ")"
       );
 
     G_CHART_AREA = SVG.select(".g-chart-area");
@@ -240,22 +240,9 @@ document.addEventListener("DOMContentLoaded", function() {
       .merge(X_AXIS)
       .attr(
         "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + (HEIGHT - X_AXIS_HEIGHT) + ")"
+        "translate(" +  (HEIGHT - X_AXIS_HEIGHT) + ")"
       )
       .call(d3.axisBottom(X_SCALE));
-
-    // Create y axis
-    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
-
-    Y_AXIS.enter()
-      .append("g")
-      .classed("y-axis", true)
-      .merge(Y_AXIS)
-      .attr(
-        "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
-      )
-      .call(d3.axisLeft(Y_SCALE));
 
     // Create bars for each
     DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
@@ -315,13 +302,6 @@ document.addEventListener("DOMContentLoaded", function() {
     X_AXIS.transition()
       .duration(TRANS_TIME)
       .call(d3.axisBottom(X_SCALE));
-
-    // Update x axis
-    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
-
-    Y_AXIS.transition()
-      .duration(TRANS_TIME)
-      .call(d3.axisLeft(Y_SCALE));
 
     // Enter/Update/Exit data bars
     DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
