@@ -104,8 +104,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Selection and d3 variables
   let SVG; // SVG selection
   let G_CHART_AREA; // Chart area group selection
-  let X_SCALE; // Band scale for x categories
-  let Y_SCALE; // Linear scale for bar heights
   let DATA_BARS; // Data bars data-join
 
   /*************************************************** Setup Callback Functions ***************************************************/
@@ -205,28 +203,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     G_CHART_AREA = SVG.select(".g-chart-area");
 
-    // Create x scale
-    X_SCALE = d3
-      .scaleBand()
-      .rangeRound([0, CHART_WIDTH])
-      .padding(0.1)
-      .domain(
-        DATA.map(function(d) {
-          return d.image_url;
-        })
-      );
-
-    // Create y scale
-    Y_SCALE = d3
-      .scaleLinear()
-      .rangeRound([CHART_HEIGHT, 0])
-      .domain([
-        0,
-        d3.max(DATA, function(d) {
-          return d.id;
-        })
-      ]);
-
     // Create bars for each
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
       return d.image_url;
@@ -249,27 +225,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Redraw data dependent elements on data change
   function updateElements() {
-    // Update x scale
-    X_SCALE = d3
-      .scaleBand()
-      .rangeRound([0, CHART_WIDTH])
-      .padding(0.1)
-      .domain(
-        DATA.map(function(d) {
-          return d.image_url;
-        })
-      );
-
-    // Update y scale
-    Y_SCALE = d3
-      .scaleLinear()
-      .rangeRound([CHART_HEIGHT, 0])
-      .domain([
-        0,
-        d3.max(DATA, function(d) {
-          return d.id;
-        })
-      ]);
 
     // Enter/Update/Exit data bars
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
@@ -280,20 +235,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return d.selected;
     })
       .transition()
-      .duration(TRANS_TIME)
-    /*  .attr("x", function(d) {
-        return X_SCALE(d.image_url);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.id);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .attr("height", function(d) {
-        return CHART_HEIGHT - Y_SCALE(d.id);
-      })
-      .style("opacity", 1)*/;
+      .duration(TRANS_TIME);
 
     DATA_BARS.enter()
       .append("svg:image")
