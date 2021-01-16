@@ -149,7 +149,7 @@
 
             //Creates a grid
             var grid=d3.select('body')
-                       .append('table')
+                       .append('section')
                           .attr('id','grid')
                           .attr('class','grid');
 
@@ -167,10 +167,10 @@
 
             //Append SVG and save reference
             //Adds div for each book
-            var books=grid.selectAll('table')
+            var books=grid.selectAll('section')
                           .data(dataset)
                           .enter()
-                          .append('table')
+                          .append('section')
                             .attr('id','book');
 
             //Add image to each block
