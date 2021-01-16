@@ -82,6 +82,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Static dimension variables
   const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
+  const IMAGE_WIDTH = 98; // Width of image
+  const IMAGE_HEIGHT = 147; // Height of image
 
   // Dynamic dimension variables
   let WIDTH; // Width of SVG element
@@ -191,9 +193,10 @@ document.addEventListener("DOMContentLoaded", function() {
     G_CHART_AREA = SVG.select(".g-chart-area");
 
     // Create bars for each
-    DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
-      return d.image_url;
-    });
+    DATA_BARS = G_CHART_AREA.selectAll(".book")
+                            .data(DATA, function(d) {
+                                return d.image_url;
+                            });
 
     DATA_BARS.enter()
       .append("svg:image")
@@ -202,7 +205,13 @@ document.addEventListener("DOMContentLoaded", function() {
 
       .attr('xlink:href', function(d) {
         return d.image_url;
-      });
+      })
+
+      .attr('x',function(d,i) {
+        return i*(IMAGE_WIDTH+EDGE_PADDING);
+      })
+      ////////////WORKING HERE
+      ;
   }
 
   // Redraw data dependent elements on data change
@@ -212,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
       return d.image_url;
     });
-/*CHANGES HERE*/
+
     DATA_BARS.transition()
              .style('opacity',1);
 
