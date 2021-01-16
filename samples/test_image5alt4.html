@@ -158,10 +158,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
-      document.getElementById('iframeid').src = document.getElementById('iframeid').src;
+      document.getElementById('iframeid').src += '';
     } else {
       updateElements();
-      document.getElementById('iframeid').src = document.getElementById('iframeid').src;
+      document.getElementById('iframeid').src += '';
     }
   }
 
