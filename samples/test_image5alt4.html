@@ -140,9 +140,9 @@ document.addEventListener("DOMContentLoaded", function() {
     ) {
       va.messagingUtil.postInstructionalMessage(
         VA_RESULT_NAME,
-        "D3 Bar Chart expects columns to be assigned in this order:\n" +
-          " 1. Category (string)\n" +
-          " 2. Measure (number)"
+        "D3 Book Images expects columns to be assigned in this order:\n" +
+          " 1. Image URL (string)\n" +
+          " 2. ID (number)"
       );
       return;
     }
@@ -151,7 +151,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA = [];
     for (let i = 0; i < VA_MESSAGE.data.length; i++) {
       DATA.push({
-        x: VA_MESSAGE.data[i][0],
+        image_url: VA_MESSAGE.data[i][0],
         y: VA_MESSAGE.data[i][1],
         selected: VA_MESSAGE.data[i][2],
         index: i
@@ -213,7 +213,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .padding(0.1)
       .domain(
         DATA.map(function(d) {
-          return d.x;
+          return d.image_url;
         })
       );
 
@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Create bars for each
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
-      return d.x;
+      return d.image_url;
     });
 
     DATA_BARS.enter()
@@ -244,7 +244,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
-        return d.x;
+        return d.image_url;
       });
   }
 
@@ -257,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .padding(0.1)
       .domain(
         DATA.map(function(d) {
-          return d.x;
+          return d.image_url;
         })
       );
 
@@ -274,7 +274,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Enter/Update/Exit data bars
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
-      return d.x;
+      return d.image_url;
     });
 
     DATA_BARS.classed("selected", function(d) {
@@ -283,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .transition()
       .duration(TRANS_TIME)
       .attr("x", function(d) {
-        return X_SCALE(d.x);
+        return X_SCALE(d.image_url);
       })
       .attr("y", function(d) {
         return Y_SCALE(d.y);
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
       .append('svg:image')
       .attr('xlink:href', function(d) {
-        return d.x;
+        return d.image_url;
       });
 
     DATA_BARS.exit()
