@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
     })
       .transition()
       .duration(TRANS_TIME)
-      .attr("x", function(d) {
+    /*  .attr("x", function(d) {
         return X_SCALE(d.image_url);
       })
       .attr("y", function(d) {
@@ -293,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("height", function(d) {
         return CHART_HEIGHT - Y_SCALE(d.id);
       })
-      .style("opacity", 1);
+      .style("opacity", 1)*/;
 
     DATA_BARS.enter()
       .append("svg:image")
@@ -315,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("data-test", function() {
         return 0;
       })
-      .style("opacity", 0)
+/*      .style("opacity", 0)*/
       .remove();
   }
 
