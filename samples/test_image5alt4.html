@@ -81,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function() {
   let DATA; // Data to be parsed from VA data message
 
   // Static dimension variables
-  const TRANS_TIME = 500; // Duration of transitions
   const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
 
   // Dynamic dimension variables
@@ -199,9 +198,6 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-/*      .classed("selected", function(d) {
-        return d.selected;
-      })*/
       .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
@@ -216,33 +212,26 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
       return d.image_url;
     });
-
-/*    DATA_BARS.classed("selected", function(d) {
-      return d.selected;
-    })
-      .transition()
-      .duration(TRANS_TIME);*/
+/*CHANGES HERE*/
+    data_bars.transition()
+             .style('opacity',1);
 
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-/*      .classed("selected", function(d) {
-        return d.selected;
-      })
-*/
       .append('svg:image')
       .attr('xlink:href', function(d) {
         return d.image_url;
-      });
+      })
+      .transition()
+      .style('opacity',1);
 
     DATA_BARS.exit()
-/*      .classed("selected", false)
       .transition()
-      .duration(TRANS_TIME)*/
       .attr("data-test", function() {
         return 0;
       })
-/*      .style("opacity", 0)*/
+      .style('opacity',0)
       .remove();
   }
 
