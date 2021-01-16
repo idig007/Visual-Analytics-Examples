@@ -29,10 +29,10 @@ limitations under the License.
     height: 100%;
   }
 
-  .selectable.selected {
+/*  .selectable.selected {
     stroke-width: 2px;
     stroke: black;
-  }
+  }*/
 </style>
 
 <script>
@@ -175,9 +175,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .data([DATA])
       .enter()
       .append("svg")
-      .attr("id", SVG_ID)
-      //.on("click", deselectAllElements)
-      ;
+      .attr("id", SVG_ID);
 
     SVG = d3
       .select("#" + SVG_ID)
@@ -205,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-      .classed("selectable", true)
+    //  .classed("selectable", true)
       .classed("selected", function(d) {
         return d.selected;
       })
@@ -233,7 +231,7 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("svg:image")
       .classed("book", true)
-      .classed("selectable", true)
+    //  .classed("selectable", true)
       .classed("selected", function(d) {
         return d.selected;
       })
@@ -264,15 +262,6 @@ document.addEventListener("DOMContentLoaded", function() {
       return true;
     }
   }
-
-  // Deselect all on svg click
-/*  function deselectAllElements() {
-    // Deselect all elements
-    d3.selectAll(".selectable").classed("selected", false);
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
-  }*/
 
 });
 </script>
