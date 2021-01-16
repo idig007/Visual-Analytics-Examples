@@ -246,8 +246,8 @@ var DATA_BARS=grid.selectAll('div')
   // Redraw data dependent elements on data change
   function updateElements() {
 
-    // Enter/Update/Exit data bars
-    DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
+    // Enter/Update/Exit data bars RECENT CHANGE
+    DATA_BARS = DATA_BARS.selectAll(".book").data(DATA, function(d) {
       return d.image_url;
     });
 
