@@ -229,8 +229,8 @@ var DATA_BARS=grid.selectAll('div')
 
     DATA_BARS.append('svg')
       .append("svg:image")
-  //    .classed("book", true)
-    //  .merge(DATA_BARS)
+      .classed("book", true)
+      .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
         return d.image_url;
