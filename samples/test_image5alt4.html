@@ -132,7 +132,7 @@ document.addEventListener("DOMContentLoaded", function() {
         VA_RESULT_NAME,
         "D3 Book Images expects columns to be assigned in this order:\n" +
           " 1. Image URL (string)\n" +
-          " 2. ID (number)"
+          " 2. ID (string)"
       );
       return;
     }
@@ -208,7 +208,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .classed("selected", function(d) {
         return d.selected;
       })
-      .on("click", selectElement)
+  //    .on("click", selectElement)
       .merge(DATA_BARS)
 
       .attr('xlink:href', function(d) {
@@ -275,9 +275,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Handle selection on element
-  function selectElement() {
-    // Prevent event from falling through to underlying elements
- //   d3.event.stopPropagation();
+  /*function selectElement() {
 
     // If control is held toggle selected on click preserving array, otherwise select only clicked element
     if (d3.event.ctrlKey) {
@@ -301,7 +299,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
-  }
+  }*/
 });
 </script>
 </body>
