@@ -174,7 +174,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .enter()
       .append("svg")
       .attr("id", SVG_ID)
-      .on("click", deselectAllElements);
+;
 
     SVG = d3
       .select("#" + SVG_ID)
@@ -228,7 +228,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .classed("selected", function(d) {
         return d.selected;
       })
-      .on("click", selectElement)
+
       .merge(DATA_BARS)
       .attr("x", function(d) {
         return X_SCALE(d.x);
@@ -310,7 +310,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("height", function(d) {
         return CHART_HEIGHT - Y_SCALE(d.y);
       })
-      .on("click", selectElement)
+
       .transition()
       .duration(TRANS_TIME);
 
