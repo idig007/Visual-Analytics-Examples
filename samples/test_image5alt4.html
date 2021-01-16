@@ -234,7 +234,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
 
     DATA_BARS.enter()
-      .append("rect")
+      .append("svg:image")
       .classed("book", true)
       .classed("selectable", true)
       .classed("selected", function(d) {
@@ -242,7 +242,11 @@ document.addEventListener("DOMContentLoaded", function() {
       })
       .on("click", selectElement)
       .merge(DATA_BARS)
-      .attr("x", function(d) {
+
+      .attr('xlink:href', function(d) {
+        return d.x;
+      })
+/*      .attr("x", function(d) {
         return X_SCALE(d.x);
       })
       .attr("y", function(d) {
@@ -253,7 +257,7 @@ document.addEventListener("DOMContentLoaded", function() {
       })
       .attr("height", function(d) {
         return CHART_HEIGHT;
-      });
+      })*/;
   }
 
   // Redraw data dependent elements on data change
@@ -305,12 +309,18 @@ document.addEventListener("DOMContentLoaded", function() {
       .style("opacity", 1);
 
     DATA_BARS.enter()
-      .append("rect")
+      .append("svg:image")
       .classed("book", true)
       .classed("selectable", true)
       .classed("selected", function(d) {
         return d.selected;
       })
+
+      .append('svg:image')
+      .attr('xlink:href', function(d) {
+        return d.x;
+      })
+/*
       .attr("x", function(d) {
         return X_SCALE(d.x);
       })
@@ -324,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .on("click", selectElement)
       .transition()
       .duration(TRANS_TIME)
-      .style("opacity", 1);
+      .style("opacity", 1)*/;
 
     DATA_BARS.exit()
       .classed("selected", false)
