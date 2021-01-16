@@ -14,11 +14,11 @@ limitations under the License.
 <html>
 <head>
   <!-- Import D3.js -->
-  <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
 
   <!-- Import utilities  -->
-  <script type="text/javascript" src="../util/messagingUtil.js"></script>
-  <script type="text/javascript" src="../util/contentUtil.js"></script>
+  <script type="text/javascript" src="../../util/messagingUtil.js"></script>
+  <script type="text/javascript" src="../../util/contentUtil.js"></script>
 </head>
 <body>
   <style type="text/css">
@@ -29,6 +29,18 @@ limitations under the License.
     height: 100%;
   }
 
+  .data-bar {
+    fill: steelblue;
+  }
+
+  .data-bar:hover {
+    fill: lightsteelblue;
+  }
+
+  .selectable.selected {
+    stroke-width: 2px;
+    stroke: black;
+  }
 </style>
 
 <script>
@@ -38,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
   /******************************************************* Declare variables *******************************************************/
 
   // Static data variables
-  const SVG_ID = "books"; // ID of SVG element
+  const SVG_ID = "dynamic-bar"; // ID of SVG element
   const SAMPLE_MESSAGE = {
     version: "1",
     resultName: "dd75",
@@ -82,6 +94,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // Static dimension variables
   const TRANS_TIME = 500; // Duration of transitions
   const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
+  const Y_AXIS_WIDTH = 30; // Width allocated for y-axis
+  const X_AXIS_HEIGHT = 30; // Height allocated for x-axis
 
   // Dynamic dimension variables
   let WIDTH; // Width of SVG element
@@ -94,7 +108,8 @@ document.addEventListener("DOMContentLoaded", function() {
   let G_CHART_AREA; // Chart area group selection
   let X_SCALE; // Band scale for x categories
   let Y_SCALE; // Linear scale for bar heights
-
+  let X_AXIS; // X axis group data-join
+  let Y_AXIS; // Y axis group data join
   let DATA_BARS; // Data bars data-join
 
   /*************************************************** Setup Callback Functions ***************************************************/
@@ -164,8 +179,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Calculate dimensions for graph based on container dimensions
     WIDTH = window.innerWidth;
     HEIGHT = window.innerHeight;
-    CHART_WIDTH = WIDTH - EDGE_PADDING;
-    CHART_HEIGHT = HEIGHT - EDGE_PADDING;
+    CHART_WIDTH = WIDTH - Y_AXIS_WIDTH - EDGE_PADDING;
+    CHART_HEIGHT = HEIGHT - X_AXIS_HEIGHT - EDGE_PADDING;
 
     // Append svg and save reference
     d3.select("body")
@@ -174,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .enter()
       .append("svg")
       .attr("id", SVG_ID)
-;
+      .on("click", deselectAllElements);
 
     SVG = d3
       .select("#" + SVG_ID)
@@ -189,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .classed("g-chart-area", true)
       .attr(
         "transform",
-        "translate("  + EDGE_PADDING + ")"
+        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
       );
 
     G_CHART_AREA = SVG.select(".g-chart-area");
@@ -216,6 +231,32 @@ document.addEventListener("DOMContentLoaded", function() {
         })
       ]);
 
+    // Create x axis
+    X_AXIS = SVG.selectAll(".x-axis").data([DATA]);
+
+    X_AXIS.enter()
+      .append("g")
+      .classed("x-axis", true)
+      .merge(X_AXIS)
+      .attr(
+        "transform",
+        "translate(" + Y_AXIS_WIDTH + ", " + (HEIGHT - X_AXIS_HEIGHT) + ")"
+      )
+      .call(d3.axisBottom(X_SCALE));
+
+    // Create y axis
+    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
+
+    Y_AXIS.enter()
+      .append("g")
+      .classed("y-axis", true)
+      .merge(Y_AXIS)
+      .attr(
+        "transform",
+        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
+      )
+      .call(d3.axisLeft(Y_SCALE));
+
     // Create bars for each
     DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
       return d.x;
@@ -224,8 +265,11 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA_BARS.enter()
       .append("rect")
       .classed("data-bar", true)
-
-
+      .classed("selectable", true)
+      .classed("selected", function(d) {
+        return d.selected;
+      })
+      .on("click", selectElement)
       .merge(DATA_BARS)
       .attr("x", function(d) {
         return X_SCALE(d.x);
@@ -265,6 +309,20 @@ document.addEventListener("DOMContentLoaded", function() {
         })
       ]);
 
+    // Update x axis
+    X_AXIS = SVG.selectAll(".x-axis").data([DATA]);
+
+    X_AXIS.transition()
+      .duration(TRANS_TIME)
+      .call(d3.axisBottom(X_SCALE));
+
+    // Update x axis
+    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
+
+    Y_AXIS.transition()
+      .duration(TRANS_TIME)
+      .call(d3.axisLeft(Y_SCALE));
+
     // Enter/Update/Exit data bars
     DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
       return d.x;
@@ -286,12 +344,16 @@ document.addEventListener("DOMContentLoaded", function() {
       })
       .attr("height", function(d) {
         return CHART_HEIGHT - Y_SCALE(d.y);
-      });
+      })
+      .style("opacity", 1);
 
     DATA_BARS.enter()
       .append("rect")
       .classed("data-bar", true)
-
+      .classed("selectable", true)
+      .classed("selected", function(d) {
+        return d.selected;
+      })
       .attr("x", function(d) {
         return X_SCALE(d.x);
       })
@@ -304,9 +366,11 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("height", function(d) {
         return CHART_HEIGHT - Y_SCALE(d.y);
       })
-
+      .style("opacity", 0)
+      .on("click", selectElement)
       .transition()
-      .duration(TRANS_TIME);
+      .duration(TRANS_TIME)
+      .style("opacity", 1);
 
     DATA_BARS.exit()
       .classed("selected", false)
@@ -314,7 +378,9 @@ document.addEventListener("DOMContentLoaded", function() {
       .duration(TRANS_TIME)
       .attr("data-test", function() {
         return 0;
-      });
+      })
+      .style("opacity", 0)
+      .remove();
   }
 
   /******************************************************* Helper Functions *******************************************************/
@@ -328,7 +394,43 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  // Deselect all on svg click
+  function deselectAllElements() {
+    // Deselect all elements
+    d3.selectAll(".selectable").classed("selected", false);
 
+    // Post message to VA
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
+  }
+
+  // Handle selection on element
+  function selectElement() {
+    // Prevent event from falling through to underlying elements
+    d3.event.stopPropagation();
+
+    // If control is held toggle selected on click preserving array, otherwise select only clicked element
+    if (d3.event.ctrlKey) {
+      // Toggle selection on clicked element
+      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
+    } else {
+      // Deselect all elements
+      d3.selectAll(".selectable").classed("selected", false);
+
+      // Select clicked element
+      d3.select(this).classed("selected", true);
+    }
+
+    // Build array of selected elements
+    const selections = [];
+    d3.selectAll(".selectable").each(function(d) {
+      if (d3.select(this).classed("selected")) {
+        selections.push({ row: d.index });
+      }
+    });
+
+    // Post message to VA
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
+  }
 });
 </script>
 </body>
