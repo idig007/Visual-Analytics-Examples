@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
   /******************************************************* Declare variables *******************************************************/
 
   // Static data variables
-  const SVG_ID = "dynamic-bar"; // ID of SVG element
+  const SVG_ID = "book-image"; // ID of SVG element
   const SAMPLE_MESSAGE = {
     version: "1",
     resultName: "dd75",
@@ -188,7 +188,7 @@ document.addEventListener("DOMContentLoaded", function() {
     SVG.selectAll(".g-chart-area")
       .data([DATA])
       .enter()
-      .append("g")
+      .append("svg")
       .classed("g-chart-area", true)
       .attr(
         "transform",
@@ -220,13 +220,13 @@ document.addEventListener("DOMContentLoaded", function() {
       ]);
 
     // Create bars for each
-    DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
+    DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
       return d.x;
     });
 
     DATA_BARS.enter()
       .append("rect")
-      .classed("data-bar", true)
+      .classed("book", true)
       .classed("selectable", true)
       .classed("selected", function(d) {
         return d.selected;
@@ -272,7 +272,7 @@ document.addEventListener("DOMContentLoaded", function() {
       ]);
 
     // Enter/Update/Exit data bars
-    DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
+    DATA_BARS = G_CHART_AREA.selectAll(".book").data(DATA, function(d) {
       return d.x;
     });
 
@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     DATA_BARS.enter()
       .append("rect")
-      .classed("data-bar", true)
+      .classed("book", true)
       .classed("selectable", true)
       .classed("selected", function(d) {
         return d.selected;
