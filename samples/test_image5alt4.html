@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   .attr('class','grid');
 
     // Enter/Update/Exit data bars
-    BOOK=GRID.selectAll('g')
+    BOOK=GRID.selectAll('div')
         .data(DATA, function(d) {
           return d.image_url;
         });
