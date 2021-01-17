@@ -204,11 +204,13 @@ document.addEventListener("DOMContentLoaded", function() {
       })
 
       .on('click', selectElement)
-      .transition();
+      .transition()
+      .duration(500);
 
     BOOK.exit()
      .classed('selected', false)
       .transition()
+      .duration(500)
       .remove();
   }
 
