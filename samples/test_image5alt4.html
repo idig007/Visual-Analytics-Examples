@@ -187,9 +187,9 @@ document.addEventListener("DOMContentLoaded", function() {
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid');
-                  
+
     // Enter/Update/Exit data bars
-    BOOK=GRID.selectAll('svg')
+    BOOK=GRID.selectAll('g')
         .data(DATA, function(d) {
           return d.image_url;
         });
