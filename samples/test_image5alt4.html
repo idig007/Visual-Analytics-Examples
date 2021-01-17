@@ -189,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK=GRID.selectAll('div')
+    BOOK=d3.selectAll('div')
         .data(DATA);
 
 /*    BOOK.classed('selected', function(d) {
