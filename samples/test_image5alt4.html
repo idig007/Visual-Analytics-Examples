@@ -56,19 +56,24 @@ document.addEventListener("DOMContentLoaded", function() {
     data: [
       [
       'https://images.gr-assets.com/books/1447303603m/2767052.jpg',
-       1],
+       1,
+      "The Hunger Games (The Hunger Games, #1)"],
       [
        'https://images.gr-assets.com/books/1474154022m/3.jpg',
-       2],
+       2,
+       "Harry Potter and the Sorcerer's Stone (Harry Potter, #1)"],
       [
        'https://images.gr-assets.com/books/1361039443m/41865.jpg',
-       3],
+       3,
+       "Twilight (Twilight, #1)"],
       [
        'https://images.gr-assets.com/books/1361975680m/2657.jpg',
-       4],
+       4,
+       "To Kill a Mockingbird"],
       [
        'https://images.gr-assets.com/books/1490528560m/4671.jpg',
-       5]
+       5,
+       "The Great Gatsby"]
     ],
     columns: [
       {
@@ -80,6 +85,11 @@ document.addEventListener("DOMContentLoaded", function() {
         name: "id",
         label: "id",
         type: "string"
+      },
+      {
+        name:'title',
+        label: 'title',
+        type: 'string'
       }
     ]
   }; // Sample data message to render graph outside of VA for debugging
@@ -116,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
     if (
       !va.contentUtil.validateRoles(
         messageFromVA,
-        ["string", "string"],
+        ["string", "string",'string'],
         ["number"]
       )
     ) {
@@ -124,7 +134,8 @@ document.addEventListener("DOMContentLoaded", function() {
         VA_RESULT_NAME,
         "D3 Book Images expects columns to be assigned in this order:\n" +
           " 1. Image URL (string)\n" +
-          " 2. ID (string)"
+          " 2. ID (string)\n" +
+          " 3. Title (string)"
       );
       return;
     }
@@ -135,7 +146,8 @@ document.addEventListener("DOMContentLoaded", function() {
       DATA.push({
         image_url: VA_MESSAGE.data[i][0],
         id: VA_MESSAGE.data[i][1],
-        selected: VA_MESSAGE.data[i][2],
+        title: VA_MESSAGE.data[i][2],
+        selected: VA_MESSAGE.data[i][3],
         index: i
       });
     }
@@ -179,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
                   })
                   .append('title')
                   .text(function(d) {
-                    return d.id;
+                    return d.title;
                   });
 
   }
@@ -202,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
       })
       .append('title')
       .text(function(d) {
-        return d.id;
+        return d.title;
       });
 
     BOOK.exit()
