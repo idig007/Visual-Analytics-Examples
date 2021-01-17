@@ -183,7 +183,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Enter/Update/Exit data bars
     BOOK=select('#grid').selectAll('g')
-        .data(DATA);
+        .data(DATA, function(d) {
+          return d.image_url;
+        });
 
     BOOK.enter()
         .append('g')
