@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Selection and d3 variables
   let GRID; // Grid for book images
   let BOOK; // Book data-join
+  let IMAGE; // Book image
 
   /*************************************************** Setup Callback Functions ***************************************************/
 
@@ -172,12 +173,14 @@ document.addEventListener("DOMContentLoaded", function() {
                  .append('svg')
                     .attr('id','book-image');
 
-    d3.selectAll('svg')
-        .append("svg:image")
-          .classed("book", true)
-          .attr('xlink:href', function(d) {
-              return d.image_url;
-            });
+    var IMAGE=d3.selectAll('svg')
+                .append('svg:image')
+                .classed('book',true)
+                .attr('xlink:href', function(d) {
+                    return d.image_url;
+                  });
+
+   IMAGE.merge(IMAGE);
   }
 
   // Redraw data dependent elements on data change
