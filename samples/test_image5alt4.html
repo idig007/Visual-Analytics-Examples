@@ -197,6 +197,9 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
     BOOK.exit()
+      .attr('data-test', function() {
+        return 0;
+      })
       .remove();
   }
 
