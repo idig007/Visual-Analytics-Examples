@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK=select('#grid').selectAll('g')
+    BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
           return d.id;
         });
