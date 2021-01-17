@@ -90,21 +90,9 @@ document.addEventListener("DOMContentLoaded", function() {
   let VA_RESULT_NAME; // Result name required to send messages back to VA
   let DATA; // Data to be parsed from VA data message
 
-  // Static dimension variables
-  const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
-  const IMAGE_WIDTH = 98; // Width of image
-  const IMAGE_HEIGHT = 147; // Height of image
-
-  // Dynamic dimension variables
-  let WIDTH; // Width of SVG element
-  let HEIGHT; // Height of SVG element
-  let CHART_WIDTH; // Width of chart area for bars
-  let CHART_HEIGHT; // Height of chart area for bars
-
   // Selection and d3 variables
-  let SVG; // SVG selection
-  let G_CHART_AREA; // Chart area group selection
-  let DATA_BARS; // Data bars data-join
+  let GRID; // Grid for book images
+  let BOOK; // Book data-join
 
   /*************************************************** Setup Callback Functions ***************************************************/
 
@@ -158,10 +146,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
-      document.getElementById('iframeid').src += '';
     } else {
       updateElements();
-      document.getElementById('iframeid').src += '';
     }
   }
 
@@ -172,85 +158,41 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    // Calculate dimensions for graph based on container dimensions
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight;
-    CHART_WIDTH = WIDTH  - EDGE_PADDING;
-    CHART_HEIGHT = HEIGHT - EDGE_PADDING;
+    //Creates a grid
+    var GRID=d3.select('body')
+               .append('div')
+                  .attr('id','grid')
+                  .attr('class','grid');
 
-    // Append svg and save reference
-/*    var grid=d3.select("body")
-      .append('div')
-          .attr('id','grid')
-          .attr('class', 'grid');
+    //Adds g for each book
+    var BOOK=GRID.selectAll('div')
+                 .data(DATA)
+                 .enter()
+                 .append('g')
+                    .attr('id','book');
 
-
-    var books=grid.selectAll('div')
-      .data([DATA])
-      .enter()
-      .append("div")
-      .attr("id", 'book');
-
-    SVG = d3
-      .select(".grid")
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT);
-
-    // Append/update chart-area group and save reference
-    SVG.selectAll("div")
-      .data([DATA])
-      .enter()
-      .append("svg")
-      .classed("g-chart-area", true)
-      .attr(
-        "transform",
-        "translate("  + EDGE_PADDING + ")"
-      );
-
-    G_CHART_AREA = SVG.select(".g-chart-area");
-
-    // Create bars for each
-    DATA_BARS = G_CHART_AREA.selectAll(".book")
-                            .data(DATA, function(d) {
-                                return d.image_url;
-                            });
-*/
-//Creates a grid
-var grid=d3.select('body')
-           .append('div')
-              .attr('id','grid')
-              .attr('class','grid');
-
-
-//Adds div for each books
-var DATA_BARS=grid.selectAll('div')
-              .data(DATA)
-              .enter()
-              .append('div')
-                .attr('id','book');
-
-    DATA_BARS.append('svg')
-      .append("svg:image")
-      .classed("book", true)
-      .merge(DATA_BARS)
-
-      .attr('xlink:href', function(d) {
-        return d.image_url;
-      });
+    BOOK.append('svg')
+          .attr('id','book-image')
+        .append("svg:image")
+          .classed("book", true)
+        .merge(BOOK)
+          .attr('xlink:href', function(d) {
+              return d.image_url;
+            });
   }
 
   // Redraw data dependent elements on data change
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    DATA_BARS = d3.selectAll("svg").data(DATA, function(d) {
+    BOOK = d3.selectAll("svg").data(DATA, function(d) {
       return d.image_url;
     });
 
-    DATA_BARS.transition()
+    BOOK.transition()
              .style('opacity',1);
 
-    DATA_BARS.enter()
+    BOOK.enter()
       .append("svg:image")
       .classed("book", true)
       .append('svg:image')
@@ -260,7 +202,7 @@ var DATA_BARS=grid.selectAll('div')
       .transition()
       .style('opacity',1);
 
-    DATA_BARS.exit()
+    BOOK.exit()
       .transition()
       .attr("data-test", function() {
         return 0;
