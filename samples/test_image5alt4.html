@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update/Exit data bars
     BOOK=d3.selectAll('div')
         .data(DATA, function(d) {
-          return d.image_url;
+          return d.id;
         });
 
     BOOK.enter()
