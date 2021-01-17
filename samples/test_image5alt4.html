@@ -163,7 +163,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Adds g for each book
     var BOOK=GRID.selectAll('g')
-                 .data(DATA)
+                 .data(DATA, function(d) {
+                   return d.id;
+                 })
                  .enter()
                  .append('g')
                     .attr('id','book');
