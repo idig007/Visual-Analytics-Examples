@@ -177,9 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
           .classed("book", true)
           .attr('xlink:href', function(d) {
               return d.image_url;
-            })
-        .merge(BOOK)
-          ;
+            });
   }
 
   // Redraw data dependent elements on data change
