@@ -176,6 +176,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
+                  })
+                  .append('title')
+                  .text(function(d) {
+                    return d.id;
                   });
 
   }
@@ -195,6 +199,10 @@ document.addEventListener("DOMContentLoaded", function() {
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
+      })
+      .append('title')
+      .text(function(d) {
+        return d.id;
       });
 
     BOOK.exit()
