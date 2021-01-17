@@ -185,14 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-
-/*    BOOK.classed('selected', function(d) {
-        return d.selected;
-      })
-      .transition()
-             .style('opacity',1);*/
-
-    var UPDATE=GRID.selectAll('g')
+    var UPDATE=GRID.selectAll('div')
         .data(DATA);
 
     UPDATE.enter()
@@ -201,16 +194,9 @@ document.addEventListener("DOMContentLoaded", function() {
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
-      })
-    /*  .transition()
-      .style('opacity',1)*/;
+      });
 
     BOOK.exit()
-/*      .transition()
-      .attr("data-test", function() {
-        return 0;
-      })
-      .style('opacity',0)*/
       .remove();
   }
 
