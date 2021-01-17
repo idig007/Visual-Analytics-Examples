@@ -163,7 +163,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
-                 .data(DATA)
+                 .data(DATA, function(d) {
+                   return d.id
+                 })
                  .enter()
                  .append('g')
                     .attr('id','book');
@@ -184,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update/Exit data bars
     BOOK=select('#grid').selectAll('g')
         .data(DATA, function(d) {
-          return d.image_url;
+          return d.id;
         });
 
     BOOK.enter()
