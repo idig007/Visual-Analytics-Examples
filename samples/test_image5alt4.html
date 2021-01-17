@@ -163,9 +163,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
-                 .data(DATA, function(d) {
-                   return d.image_url;
-                 })
+                 .data(DATA)
                  .enter()
                  .append('g')
                     .attr('id','book');
@@ -184,10 +182,8 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK=d3.selectAll('g')
-        .data(DATA, function(d) {
-          return d.image_url;
-        });
+    BOOK=d3.selectAll('div')
+        .data(DATA);
 
     BOOK.enter()
         .append('g')
