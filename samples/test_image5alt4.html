@@ -185,31 +185,32 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK = d3.selectAll("g").data(DATA, function(d) {
-      return d.image_url;
-    });
 
-    BOOK.classed('selected', function(d) {
+/*    BOOK.classed('selected', function(d) {
         return d.selected;
       })
       .transition()
-             .style('opacity',1);
+             .style('opacity',1);*/
 
-    BOOK.enter()
-      .append('svg')
+    var UPDATE=GRID.selectAll('g')
+        .data(DATA);
+
+    UPDATE.enter()
+        .append('g')
+        .append('svg')
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
-      .transition()
-      .style('opacity',1);
+    /*  .transition()
+      .style('opacity',1)*/;
 
     BOOK.exit()
-      .transition()
+/*      .transition()
       .attr("data-test", function() {
         return 0;
       })
-      .style('opacity',0)
+      .style('opacity',0)*/
       .remove();
   }
 
