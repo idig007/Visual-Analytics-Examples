@@ -170,10 +170,10 @@ document.addEventListener("DOMContentLoaded", function() {
                  .enter()
                  .append('g')
                     .attr('id','book')
-                    .classed('selected', function(d) {
+            /*        .classed('selected', function(d) {
                       return d.selected;
                     })
-                    .on('click', selectElement);
+                    .on('click', selectElement)*/;
 
     //Add image to each block
     var IMAGE=BOOK.append('svg')
@@ -189,13 +189,13 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK=GRID.selectAll('g')
+    BOOK=GRID.selectAll('div')
         .data(DATA);
 
-    BOOK.classed('selected', function(d) {
+/*    BOOK.classed('selected', function(d) {
           return d.selected;
         })
-        .transition();
+        .transition();*/
 
 
     BOOK.enter()
@@ -205,16 +205,16 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
-      .classed('selected', function(d) {
+/*      .classed('selected', function(d) {
           return d.selected;
       })
 
       .on('click', selectElement)
-      .transition();
+      .transition()*/;
 
     BOOK.exit()
-      .classed('selected', false)
-      .transition()
+/*      .classed('selected', false)
+      .transition()*/
       .remove();
   }
 
