@@ -183,6 +183,11 @@ document.addEventListener("DOMContentLoaded", function() {
   // Redraw data dependent elements on data change
   function updateElements() {
 
+    var GRID=d3.select('body')
+               .append('div')
+                  .attr('id','grid')
+                  .attr('class','grid');
+                  
     // Enter/Update/Exit data bars
     BOOK=GRID.selectAll('svg')
         .data(DATA, function(d) {
