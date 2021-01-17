@@ -185,11 +185,11 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    var UPDATE=GRID.selectAll('div')
+    var UPDATE=GRID.selectAll('g')
         .data(DATA);
 
     UPDATE.enter()
-        .append('g')
+//        .append('g')
         .append('svg')
       .append("svg:image")
       .attr('xlink:href', function(d) {
