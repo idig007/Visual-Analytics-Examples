@@ -169,11 +169,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  .data(DATA)
                  .enter()
                  .append('g')
-                    .attr('id','book')
-                    .classed('selected', function(d) {
-                      return d.selected;
-                    })
-                    .on('click', selectElement);
+                    .attr('id','book');
 
     //Add image to each block
     var IMAGE=BOOK.append('svg')
@@ -181,7 +177,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
-                  });
+                  })
+                .classed('selected', function(d) {
+                  return d.selected;
+                })
+                .on('click', selectElement);
 
   }
 
@@ -191,12 +191,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update/Exit data bars
     BOOK=d3.selectAll('div')
         .data(DATA);
-
-    BOOK.classed('selected', function(d) {
-          return d.selected;
-        })
-        .transition();
-
 
     BOOK.enter()
         .append('g')
