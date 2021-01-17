@@ -180,7 +180,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     return d.image_url;
                   });
 
-   IMAGE.merge(IMAGE);
+   IMAGE.merge(IMAGE)
+        .attr('xlink:href', function(d) {
+            return d.image_url;
+        });
   }
 
   // Redraw data dependent elements on data change
