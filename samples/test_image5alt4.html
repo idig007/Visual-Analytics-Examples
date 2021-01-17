@@ -179,27 +179,25 @@ document.addEventListener("DOMContentLoaded", function() {
                     return d.image_url;
                   });
 
-   /*IMAGE.merge(BOOK)
-        .attr('xlink:href', function(d) {
-            return d.image_url;
-        });*/
   }
 
   // Redraw data dependent elements on data change
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    BOOK = d3.selectAll("svg").data(DATA, function(d) {
+    BOOK = d3.selectAll("g").data(DATA, function(d) {
       return d.image_url;
     });
 
-    BOOK.transition()
+    BOOK.classed('selected', function(d) {
+        return d.selected;
+      }]
+      .transition()
              .style('opacity',1);
 
     BOOK.enter()
+      .append('svg')
       .append("svg:image")
-      .classed("book", true)
-      .append('svg:image')
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
