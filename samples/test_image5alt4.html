@@ -175,10 +175,11 @@ document.addEventListener("DOMContentLoaded", function() {
           .attr('id','book-image')
         .append("svg:image")
           .classed("book", true)
-        .merge(BOOK)
           .attr('xlink:href', function(d) {
               return d.image_url;
-            });
+            })
+        .merge(BOOK)
+          ;
   }
 
   // Redraw data dependent elements on data change
