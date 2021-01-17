@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  .append('svg')
                     .attr('id','book-image');
 
-    var IMAGE=d3.selectAll('svg')
+    var IMAGE=GRID.selectAll('svg')
                 .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
