@@ -188,6 +188,11 @@ document.addEventListener("DOMContentLoaded", function() {
     var UPDATE=GRID.selectAll('g')
         .data(DATA);
 
+    UPDATE.classed('selected', function(d) {
+          return d.selected;
+        });
+
+
     UPDATE.enter()
 //        .append('g')
         .append('svg')
@@ -195,10 +200,14 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
+      .classed('selected', function(d) {
+          return d.selected;
+      })
 
       .on('click', selectElement);
 
     BOOK.exit()
+      .classed('selected', false)
       .remove();
   }
 
