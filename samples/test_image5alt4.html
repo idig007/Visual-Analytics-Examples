@@ -169,7 +169,11 @@ document.addEventListener("DOMContentLoaded", function() {
                  .data(DATA)
                  .enter()
                  .append('g')
-                    .attr('id','book');
+                    .attr('id','book')
+                    .classed('selected', function(d) {
+                      return d.selected;
+                    })
+                    .on('click', selectElement);
 
     //Add image to each block
     var IMAGE=BOOK.append('svg')
