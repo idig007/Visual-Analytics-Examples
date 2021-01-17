@@ -189,16 +189,16 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Enter/Update/Exit data bars
-    var UPDATE=GRID.selectAll('.book')
+    BOOK=GRID.selectAll('g')
         .data(DATA);
 
-    UPDATE.classed('selected', function(d) {
+    BOOK.classed('selected', function(d) {
           return d.selected;
         })
         .transition();
 
 
-    UPDATE.enter()
+    BOOK.enter()
         .append('g')
         .append('svg')
       .append("svg:image")
