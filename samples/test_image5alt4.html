@@ -190,7 +190,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     UPDATE.classed('selected', function(d) {
           return d.selected;
-        });
+        })
+        .transition();
 
 
     UPDATE.enter()
@@ -204,10 +205,12 @@ document.addEventListener("DOMContentLoaded", function() {
           return d.selected;
       })
 
-      .on('click', selectElement);
+      .on('click', selectElement)
+      .transition();
 
     BOOK.exit()
       .classed('selected', false)
+      .transition()
       .remove();
   }
 
