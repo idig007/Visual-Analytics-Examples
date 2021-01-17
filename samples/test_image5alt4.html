@@ -162,11 +162,12 @@ document.addEventListener("DOMContentLoaded", function() {
                   .attr('class','grid');
 
     //Adds g for each book
-    var BOOK=GRID.selectAll('g')
+    BOOK=GRID.selectAll('g')
                  .data(DATA, function(d) {
                    return d.id;
-                 })
-                 .enter()
+                 });
+
+    BOOK.enter()
                  .append('g')
                     .attr('id','book');
 
