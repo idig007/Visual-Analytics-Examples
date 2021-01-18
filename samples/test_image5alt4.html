@@ -21,33 +21,34 @@ limitations under the License.
   <script type="text/javascript" src="../util/contentUtil.js"></script>
 </head>
 <body>
+  <!-- CSS code -->
   <style type="text/css">
+
+  /* Define html, body, and svg element styles */
   html, body, svg {
-/*  overflow: hidden;*/
     margin: 0px;
     width: 100%;
     height: 100%;
   }
+
+  /* Define grid styles */
   .grid{
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
     grid-auto-rows: auto;
   };
 
-  .book {
-    border-radius:0px;
-    background-color:#808080;
-  }
-
 </style>
 
 <script>
 "use strict";
 
+// Listening for HTML document completely loaded and parsed
 document.addEventListener("DOMContentLoaded", function() {
+
   /******************************************************* Declare variables *******************************************************/
 
-  // Static data variables
+  // Sample data message to render outside of VA for debugginb
   const SAMPLE_MESSAGE = {
     version: "1",
     resultName: "dd75",
@@ -92,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
         type: 'string'
       }
     ]
-  }; // Sample data message to render graph outside of VA for debugging
+  };
 
   // Dynamic data variables
   let VA_MESSAGE; // Data message to be received from VA
@@ -110,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function() {
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
   // If not being rendered in iFrame (outside VA), render with sample data
-  if (!inIframe()) {
+  if (!inIframe() || !DATA) {
     onDataReceived(SAMPLE_MESSAGE);
   }
 
