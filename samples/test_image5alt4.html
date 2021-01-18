@@ -142,6 +142,8 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
+    if (messageFromVA.availableRowCount= -1) {VA_MESSAGE=SAMPLE_MESSAGE};
+
     // Restructure data from 2d array to array of objects
     DATA = [];
     for (let i = 0; i < VA_MESSAGE.data.length; i++) {
