@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
 
-    if (VA_RESULT_NAME='test') {VA_MESSAGE=SAMPLE_MESSAGE};
+    if (VA_RESULT_NAME='test') {VA_MESSAGE=SAMPLE_MESSAGE} else {VA_MESSAGE=messageFromVA};
 
     // Validate data roles
     if (
