@@ -97,7 +97,8 @@ document.addEventListener("DOMContentLoaded", function() {
   // Dynamic data variables
   let VA_MESSAGE; // Data message to be received from VA
   let VA_RESULT_NAME; // Result name required to send messages back to VA
-  let DATA; // Data to be parsed from VA data message
+  let VA_DATA; // Data to be parsed from VA message
+  let DATA; // Data used to create graph
 
   // Selection and d3 variables
   let GRID; // Grid for book images
@@ -121,6 +122,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize data variables
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
+
+    if (!VA_RESULT_NAME) VA_MESSAGE=SAMPLE_MESSAGE;
 
     // Validate data roles
     if (
