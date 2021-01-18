@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time and on resize event
   function drawElements() {
     // Return if data is not yet initialized
-    if (!DATA) {
+    if (messageFromVA.data.length === 0) {
       VA_MESSAGE=SAMPLE_MESSAGE;
       console.log(VA_MESSAGE);
     }
