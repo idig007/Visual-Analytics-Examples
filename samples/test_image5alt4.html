@@ -126,6 +126,7 @@ document.addEventListener("DOMContentLoaded", function() {
       VA_MESSAGE=SAMPLE_MESSAGE;
       console.log('no data');
       console.log(VA_MESSAGE);
+      console.log('sample');
       console.log(SAMPLE_MESSAGE);
     } else {
       VA_MESSAGE=messageFromVA;
@@ -161,7 +162,6 @@ document.addEventListener("DOMContentLoaded", function() {
         index: i
       });
     }
-    console.log(DATA);
 
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
