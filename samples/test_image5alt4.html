@@ -123,8 +123,6 @@ document.addEventListener("DOMContentLoaded", function() {
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
 
-    if (!VA_RESULT_NAME) {VA_MESSAGE=SAMPLE_MESSAGE} else {VA_MESSAGE=messageFromVA};
-
     // Validate data roles
     if (
       !va.contentUtil.validateRoles(
@@ -133,6 +131,8 @@ document.addEventListener("DOMContentLoaded", function() {
         ["number"]
       )
     ) {
+      VA_MESSAGE=SAMPLE_MESSAGE;
+
       va.messagingUtil.postInstructionalMessage(
         VA_RESULT_NAME,
         "D3 Book Images expects columns to be assigned in this order:\n" +
