@@ -163,13 +163,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time and on resize event
   function drawElements() {
     // Return if data is not yet initialized
-    if (VA_MESSAGE.data.length === 0) {
-      VA_MESSAGE=SAMPLE_MESSAGE;
-      console.log(VA_MESSAGE);
-    }
+    if (!DATA) {
+    console.log('no data');
+}
 
     //Creates a grid
-    var GRID=d3.select('body')
+    GRID=d3.select('body')
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid');
@@ -184,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .attr('id','book');
 
     //Add image to each block
-    var IMAGE=BOOK.append('svg')
+    IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
                 .append('svg:image')
                 .attr('xlink:href', function(d) {
