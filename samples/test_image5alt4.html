@@ -119,6 +119,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Take action on received data
   function onDataReceived(messageFromVA) {
+
     // Initialize data variables
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
@@ -161,8 +162,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Draw elements for first time and on resize event
+  // Draw elements for first time
   function drawElements() {
+
     // Return if data is not yet initialized
     if (!DATA) {
       return;
@@ -183,7 +185,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  .append('g')
                     .attr('id','book');
 
-    //Add image to each block
+    //Adds image to each g
     var IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
                 .append('svg:image')
@@ -200,12 +202,12 @@ document.addEventListener("DOMContentLoaded", function() {
   // Redraw data dependent elements on data change
   function updateElements() {
 
-    // Enter/Update/Exit data bars
     BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
           return d.id;
         });
 
+    // Enter/Update images
     BOOK.enter()
         .append('g')
         .append('svg')
@@ -218,6 +220,7 @@ document.addEventListener("DOMContentLoaded", function() {
         return d.title;
       });
 
+    // Exit images
     BOOK.exit()
       .remove();
   }
