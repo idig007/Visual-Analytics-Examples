@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Static data variables
   const SAMPLE_MESSAGE = {
     version: "1",
-    resultName: "dd75",
+    resultName: "test",
     rowCount: 6,
     availableRowCount: 6,
     data: [
@@ -123,7 +123,7 @@ document.addEventListener("DOMContentLoaded", function() {
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
 
-    if (!VA_RESULT_NAME) {VA_MESSAGE=SAMPLE_MESSAGE};
+    if (VA_RESULT_NAME='test') {VA_MESSAGE=SAMPLE_MESSAGE};
 
     // Validate data roles
     if (
