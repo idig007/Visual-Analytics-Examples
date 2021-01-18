@@ -164,11 +164,11 @@ document.addEventListener("DOMContentLoaded", function() {
   function drawElements() {
     // Return if data is not yet initialized
     if (!DATA) {
-    console.log('no data');
-}
+      return;
+    }
 
     //Creates a grid
-    GRID=d3.select('body')
+    var GRID=d3.select('body')
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid');
@@ -183,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .attr('id','book');
 
     //Add image to each block
-    IMAGE=BOOK.append('svg')
+    var IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
                 .append('svg:image')
                 .attr('xlink:href', function(d) {
