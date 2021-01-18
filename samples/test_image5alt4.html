@@ -124,6 +124,9 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize data variables
     if (messageFromVA.data.length === 0) {
       VA_MESSAGE=SAMPLE_MESSAGE;
+      console.log('no data');
+      console.log(VA_MESSAGE);
+      console.log(SAMPLE_MESSAGE);
     } else {
       VA_MESSAGE=messageFromVA;
     }
