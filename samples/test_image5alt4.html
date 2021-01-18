@@ -119,9 +119,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Take action on received data
   function onDataReceived(messageFromVA) {
+
+    console.log(messageFromVA.data.length);
     // Initialize data variables
-    VA_MESSAGE = messageFromVA;
-    console.log(VA_MESSAGE);
+    if (messageFromVA.data.length === 0) {
+      VA_MESSAGE=SAMPLE_MESSAGE;
+    } else {
+      VA_MESSAGE=messageFromVA;
+    }
     VA_RESULT_NAME = messageFromVA.resultName;
 
     // Validate data roles
@@ -142,9 +147,6 @@ document.addEventListener("DOMContentLoaded", function() {
       return;
     }
 
-    if (messageFromVA.data.length = 0) {VA_MESSAGE=SAMPLE_MESSAGE};
-    console.log(messageFromVA.data.length);
-
     // Restructure data from 2d array to array of objects
     DATA = [];
     for (let i = 0; i < VA_MESSAGE.data.length; i++) {
@@ -156,6 +158,7 @@ document.addEventListener("DOMContentLoaded", function() {
         index: i
       });
     }
+    console.log(DATA);
 
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
