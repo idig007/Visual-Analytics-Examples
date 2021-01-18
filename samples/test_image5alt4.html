@@ -163,6 +163,9 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
+    console.log('after restructure');
+    console.log(DATA);
+
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
