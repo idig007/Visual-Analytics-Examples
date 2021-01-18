@@ -50,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Static data variables
   const SAMPLE_MESSAGE = {
     version: "1",
-    resultName: "sample",
+    resultName: "dd75",
     rowCount: 6,
     availableRowCount: 6,
     data: [
@@ -97,8 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Dynamic data variables
   let VA_MESSAGE; // Data message to be received from VA
   let VA_RESULT_NAME; // Result name required to send messages back to VA
-  let VA_DATA; // Data to be parsed from VA message
-  let DATA; // Data used to create graph
+  let DATA; // Data to be parsed from VA data message
 
   // Selection and d3 variables
   let GRID; // Grid for book images
@@ -119,18 +118,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Take action on received data
   function onDataReceived(messageFromVA) {
-
-    console.log(messageFromVA.data.length);
     // Initialize data variables
-    if (messageFromVA.data.length === 0) {
-      VA_MESSAGE=SAMPLE_MESSAGE;
-      console.log('no data');
-      console.log(VA_MESSAGE);
-      console.log('sample');
-      console.log(SAMPLE_MESSAGE);
-    } else {
-      VA_MESSAGE=messageFromVA;
-    }
+    VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
 
     // Validate data roles
@@ -148,7 +137,7 @@ document.addEventListener("DOMContentLoaded", function() {
           " 2. ID (string)\n" +
           " 3. Title (string)"
       );
-    //  return;
+      return;
     }
 
     // Restructure data from 2d array to array of objects
@@ -163,9 +152,6 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
 
-    console.log('after restructure');
-    console.log(DATA);
-
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
@@ -177,9 +163,9 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time and on resize event
   function drawElements() {
     // Return if data is not yet initialized
-  /*  if (!DATA) {
+    if (!DATA) {
       return;
-    }*/
+    }
 
     //Creates a grid
     var GRID=d3.select('body')
