@@ -48,6 +48,11 @@ limitations under the License.
     border: 5px solid red;
   }
 
+  /* Define styles for selecting an image */
+  .selectable.selected {
+    border: 5px solid blue;
+  }
+
 </style>
 
 <script>
@@ -179,7 +184,8 @@ document.addEventListener("DOMContentLoaded", function() {
     GRID=d3.select('body')
                .append('div')
                   .attr('id','grid')
-                  .attr('class','grid');
+                  .attr('class','grid')
+                  .on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -189,9 +195,11 @@ document.addEventListener("DOMContentLoaded", function() {
                  .enter()
                  .append('g')
                     .attr('id','book')
+                    .classed('selectable', true)
                     .classed('brushed', function(d) {
                       return d.brushed;
-                    });
+                    })
+                    .on('click', selectElement);
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
@@ -215,16 +223,20 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
+        .classed('selectable', true)
         .classed('brushed', function(d) {
             return d.brushed;
-        });
+        })
+        .on('click', selectElement);
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
+        .classed('selectable', true)
         .classed('brushed', function(d) {
           return d.brushed;
         })
+        .on('click', selectElement)
         .append('svg')
         .append("svg:image")
               .classed('book-image', true)
@@ -251,6 +263,44 @@ document.addEventListener("DOMContentLoaded", function() {
     } catch (e) {
       return true;
     }
+  }
+
+  // Deselect all on body click
+  function deselectAllElements() {
+    // Deselect all elements
+    d3.selectAll(".selectable").classed("selected", false);
+
+    // Post message to VA that no elements are selected
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
+  }
+
+  // Handle selection on element
+  function selectElement() {
+    // Prevent event from falling through to underlying elements
+    event.stopPropagation();
+
+    // If control is held toggle selected on click preserving array, otherwise select only clicked element
+    if (event.ctrlKey) {
+      // Toggle selection on clicked element
+      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
+    } else {
+      // Deselect all elements
+      d3.selectAll(".selectable").classed("selected", false);
+
+      // Select clicked element
+      d3.select(this).classed("selected", true);
+    }
+
+    // Build array of selected elements
+    const selections = [];
+    d3.selectAll(".selectable").each(function(d) {
+      if (d3.select(this).classed("selected")) {
+        selections.push({ row: d.index });
+      }
+    });
+
+    // Post message to VA
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }
 
 });
