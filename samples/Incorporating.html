@@ -202,7 +202,28 @@ document.addEventListener("DOMContentLoaded", function() {
 
   // Redraw data dependent elements on data change
   function updateElements() {
-      // ADD IN NEXT STEP
+
+        BOOK=d3.select('#grid').selectAll('g')
+            .data(DATA, function(d) {
+              return d.id;
+            });
+
+        // Enter/Update images
+        BOOK.enter()
+            .append('g')
+            .append('svg')
+          .append("svg:image")
+          .attr('xlink:href', function(d) {
+            return d.image_url;
+          })
+          .append('title')
+          .text(function(d) {
+            return d.title;
+          });
+
+        // Exit images
+        BOOK.exit()
+          .remove();
   }
 
   /******************************************************* Helper Functions *******************************************************/
