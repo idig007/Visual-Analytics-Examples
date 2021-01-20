@@ -155,7 +155,7 @@ document.addEventListener("DOMContentLoaded", function() {
         image_url: VA_MESSAGE.data[i][0],
         id: VA_MESSAGE.data[i][1],
         title: VA_MESSAGE.data[i][2],
-        brushed: VA_MESSAGE.data[i][3],
+        selected: VA_MESSAGE.data[i][3],
         index: i
       });
     }
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid')
-                  .on('click', deselectAllElements);
+                  ;//.on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -185,16 +185,17 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book');
+                    .attr('id','book')
+                    .classed('selectable', true)
+                    .classed('selected', function(d) {
+                        return d.selected;
+                    });
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
-                    .classed('selectable', true)
-                    .classed('selected', function(d) {
-                        return d.brushed;
-                    })
-                    .on('click', selectElement)
+
+                  //  .on('click', selectElement)
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
@@ -214,14 +215,21 @@ document.addEventListener("DOMContentLoaded", function() {
           return d.id;
         });
 
+    BOOK.classed('selected', function(d) {
+      return d.selected;
+    })
+    .transiton()
+    .style('opacity', 1);
+
     // Enter/Update images
     BOOK.enter()
         .append('g')
-        .append('svg')
         .classed('selectable', true)
         .classed('selected', function(d) {
-            return d.brushed;
+            return d.selected;
         })
+        .append('svg')
+
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
@@ -230,11 +238,14 @@ document.addEventListener("DOMContentLoaded", function() {
       .text(function(d) {
         return d.title;
       })
-      .on('click', selectElement);
+      .style('opacity', 0)
+      ;//.on('click', selectElement);
 
     // Exit images
     BOOK.exit()
     .classed('selected', false)
+    .transition()
+    .style('opacity', 0)
       .remove();
   }
 
@@ -248,6 +259,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return true;
     }
   }
+/*
   // Deselect all on svg click
   function deselectAllElements() {
     // Deselect all elements
@@ -285,6 +297,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }
+  */
 });
 </script>
 </body>
