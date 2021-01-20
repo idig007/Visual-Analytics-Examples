@@ -241,7 +241,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Exit images
     BOOK.exit()
-    .classed('selected',false)
+      .classed('selected', function(d) {
+        return d.selected;
+      })
       .remove();
   }
 
