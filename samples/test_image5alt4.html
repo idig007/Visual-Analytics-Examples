@@ -409,7 +409,7 @@ document.addEventListener("DOMContentLoaded", function() {
     event.stopPropagation();
 
     // If control is held toggle selected on click preserving array, otherwise select only clicked element
-    if (d3.event.ctrlKey) {
+    if (event.ctrlKey) {
       // Toggle selection on clicked element
       d3.select(this).classed("selected", !d3.select(this).classed("selected"));
     } else {
