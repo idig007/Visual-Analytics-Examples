@@ -227,7 +227,6 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update images
     BOOK.enter()
         .append('g')
-
         .append('svg')
         .classed('book-image', true)
       .append("svg:image")
@@ -241,7 +240,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Exit images
     BOOK.exit()
-    .classed('selected', false)
       .remove();
   }
 
