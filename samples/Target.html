@@ -165,11 +165,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time
   function drawElements() {
 
-    // Return if data is not yet initialized
-    if (!DATA) {
-      return;
-    }
-
     //Creates a grid
     GRID=d3.select('body')
                .append('div')
