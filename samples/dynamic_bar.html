@@ -187,7 +187,8 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book');
+                    .attr('id','book')
+                    .classed('selectable', true);
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
