@@ -794,8 +794,6 @@ document.addEventListener("DOMContentLoaded", function() {
         const i = d3.interpolateNumber(oldVal, newVal);
         return function(t) {
           that.text("Total " + METADATA.value.label + ": " + formatter.format(i(t)));  //Change to use formatter.format
-          console.log(formatter.format(2300));
-          console.log(formatter.format(i(t)));
         };
       })
       .style("font-size", fontSize);
