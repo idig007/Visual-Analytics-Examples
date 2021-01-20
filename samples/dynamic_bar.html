@@ -217,10 +217,10 @@ document.addEventListener("DOMContentLoaded", function() {
           return d.id;
         })
         .classed('selected', function(d) {
-      return d.selected;
+      return !d.selected;
     })
     .classed('', function(d) {
-      return !d.selected;
+      return d.selected;
     })
       ;
 
