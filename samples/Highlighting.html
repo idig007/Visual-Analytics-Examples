@@ -38,11 +38,15 @@ limitations under the License.
     grid-auto-rows: auto;
   }
 
+  /* Define book-image styles */
+  .book-image{
+    width: 100%;
+  }
+
   /* Define styles for brushing */
-  .selectable.brushed {
-    stroke-width: 2px;
-    stroke: red;
-  };
+  .brushed{
+    border: 5px solid red;
+  }
 
 </style>
 
@@ -171,11 +175,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time
   function drawElements() {
 
-    // Return if data is not yet initialized
-    if (!DATA) {
-      return;
-    }
-
     //Creates a grid
     GRID=d3.select('body')
                .append('div')
@@ -189,16 +188,15 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book');
+                    .attr('id','book')
+                    .classed('brushed', function(d) {
+                      return d.brushed;
+                    });
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-                    .attr('id','book-image')
               .append('svg:image')
-              .classed('selectable', true)
-              .classed('brushed', function(d) {
-                  return d.brushed;
-              })
+              .classed('book-image', true)
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
@@ -212,30 +210,35 @@ document.addEventListener("DOMContentLoaded", function() {
   // Redraw data dependent elements on data change
   function updateElements() {
 
+    // Change in data (no enter or exit images)
     BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
           return d.id;
+        })
+        .classed('brushed', function(d) {
+            return d.brushed;
         });
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
+        .classed('brushed', function(d) {
+          return d.brushed;
+        })
         .append('svg')
-      .append("svg:image")
-      .classed('selectable', true)
-      .classed('brushed', function(d) {
-        return d.brushed;
-      })
-      .attr('xlink:href', function(d) {
-        return d.image_url;
-      })
-      .append('title')
-      .text(function(d) {
-        return d.title;
-      });
+        .append("svg:image")
+              .classed('book-image', true)
+              .attr('xlink:href', function(d) {
+                return d.image_url;
+              })
+        .append('title')
+          .text(function(d) {
+            return d.title;
+          });
 
     // Exit images
     BOOK.exit()
+    .classed('brushed', false)
       .remove();
   }
 
