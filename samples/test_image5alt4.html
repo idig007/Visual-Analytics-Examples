@@ -171,11 +171,6 @@ document.addEventListener("DOMContentLoaded", function() {
   // Draw elements for first time
   function drawElements() {
 
-    // Return if data is not yet initialized
-    if (!DATA) {
-      return;
-    }
-
     //Creates a grid
     GRID=d3.select('body')
                .append('div')
@@ -197,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .classed('selectable', true)
                     .classed('selected', function(d) {
                         return d.brushed;
+                        console.log(d.brushed);
                     })
               .append('svg:image')
                 .attr('xlink:href', function(d) {
@@ -224,6 +220,8 @@ document.addEventListener("DOMContentLoaded", function() {
         .classed('selectable', true)
         .classed('selected', function(d) {
             return d.brushed;
+            console.log('update');
+            console.log(d.brushed);
         })
       .append("svg:image")
       .attr('xlink:href', function(d) {
