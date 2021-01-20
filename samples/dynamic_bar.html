@@ -221,9 +221,9 @@ document.addEventListener("DOMContentLoaded", function() {
           return d.id;
         });
 
-  /*  BOOK.classed('selected', function(d) {
-      return d.selected;
-    });*/
+    BOOK.classed('selected', function(d) {
+      return !d.selected;
+    });
 
     // Enter/Update images
     BOOK.enter()
