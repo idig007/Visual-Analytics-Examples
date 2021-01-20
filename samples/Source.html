@@ -49,7 +49,7 @@ limitations under the License.
   }
 
   /* Define styles for selecting an image */
-  .selectable.selected {
+  .selectable.brushed {
     border: 5px solid blue;
   }
 
@@ -268,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Deselect all on body click
   function deselectAllElements() {
     // Deselect all elements
-    d3.selectAll(".selectable").classed("selected", false);
+    d3.selectAll(".selectable").classed("brushed", false);
 
     // Post message to VA that no elements are selected
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
@@ -282,19 +282,19 @@ document.addEventListener("DOMContentLoaded", function() {
     // If control is held toggle selected on click preserving array, otherwise select only clicked element
     if (event.ctrlKey) {
       // Toggle selection on clicked element
-      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
+      d3.select(this).classed("brushed", !d3.select(this).classed("brushed"));
     } else {
       // Deselect all elements
-      d3.selectAll(".selectable").classed("selected", false);
+      d3.selectAll(".selectable").classed("brushed", false);
 
       // Select clicked element
-      d3.select(this).classed("selected", true);
+      d3.select(this).classed("brushed", true);
     }
 
     // Build array of selected elements
     const selections = [];
     d3.selectAll(".selectable").each(function(d) {
-      if (d3.select(this).classed("selected")) {
+      if (d3.select(this).classed("brushed")) {
         selections.push({ row: d.index });
       }
     });
