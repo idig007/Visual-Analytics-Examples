@@ -163,8 +163,10 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
+      console.log(DATA);
     } else {
       updateElements();
+      console.log(DATA);
     }
   }
 
@@ -204,7 +206,8 @@ document.addEventListener("DOMContentLoaded", function() {
                   .append('title')
                   .text(function(d) {
                     return d.title;
-                  });
+                  })
+                  .merge(BOOK);
 
   }
 
