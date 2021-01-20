@@ -187,13 +187,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-
                 .append('svg:image')
-              .classed('book-image', true)
-                .attr('xlink:href', function(d) {
-                    return d.image_url;
+                  .classed('book-image', true)
+                  .attr('xlink:href', function(d) {
+                      return d.image_url;
                   })
-                  .append('title')
+                .append('title')
                   .text(function(d) {
                     return d.title;
                   });
@@ -213,6 +212,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .append('g')
         .append('svg')
       .append("svg:image")
+                  .classed('book-image', true)
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
