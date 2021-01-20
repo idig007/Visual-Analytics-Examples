@@ -178,7 +178,8 @@ document.addEventListener("DOMContentLoaded", function() {
     GRID=d3.select('body')
                .append('div')
                   .attr('id','grid')
-                  .attr('class','grid');
+                  .attr('class','grid')
+                  .on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -196,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .classed('selected', function(d) {
                         return d.brushed;
                     })
+                    .onclick('click', selectElement)
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
@@ -230,10 +232,12 @@ document.addEventListener("DOMContentLoaded", function() {
       .append('title')
       .text(function(d) {
         return d.title;
-      });
+      })
+      .on('click', selectElement);
 
     // Exit images
     BOOK.exit()
+    .classed('selected', false)
       .remove();
   }
 
@@ -247,7 +251,43 @@ document.addEventListener("DOMContentLoaded", function() {
       return true;
     }
   }
+  // Deselect all on svg click
+  function deselectAllElements() {
+    // Deselect all elements
+    d3.selectAll(".selectable").classed("selected", false);
 
+    // Post message to VA
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
+  }
+
+  // Handle selection on element
+  function selectElement() {
+    // Prevent event from falling through to underlying elements
+  //  d3.event.stopPropagation();
+
+    // If control is held toggle selected on click preserving array, otherwise select only clicked element
+    if (d3.event.ctrlKey) {
+      // Toggle selection on clicked element
+      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
+    } else {
+      // Deselect all elements
+      d3.selectAll(".selectable").classed("selected", false);
+
+      // Select clicked element
+      d3.select(this).classed("selected", true);
+    }
+
+    // Build array of selected elements
+    const selections = [];
+    d3.selectAll(".selectable").each(function(d) {
+      if (d3.select(this).classed("selected")) {
+        selections.push({ row: d.index });
+      }
+    });
+
+    // Post message to VA
+    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
+  }
 });
 </script>
 </body>
