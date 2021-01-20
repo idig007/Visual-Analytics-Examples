@@ -46,7 +46,11 @@ limitations under the License.
 
   /* Define styles for brushing */
   .selected {
-    opacity: 0.5;
+    opacity: 1;
+  }
+
+  .notselected {
+    opacity: 0.2;
   }
 
 
@@ -196,9 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  .enter()
                  .append('g')
                     .attr('id','book')
-                    .classed('selected', function(d) {
-                      return d.selected;
-                    });
+                    .classed('selected', true);
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
@@ -226,17 +228,25 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
+        .classed('selected', true)
         .classed('selected', function(d) {
       return d.selected;
+    })
+    .classed('notselected', function(d) {
+      return !d.selected;
     })
       ;
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
+        .classed('selected', true)
         .classed('selected', function(d) {
-          return d.selected;
-        })
+      return d.selected;
+    })
+    .classed('notselected', function(d) {
+      return !d.selected;
+    })
         .append('svg')
         .classed('book-image', true)
       .append("svg:image")
