@@ -219,6 +219,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
+        .classed('selected', false)
         .classed('selectable', true)
         .classed('selected', function(d) {
       return !d.selected;
@@ -241,9 +242,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Exit images
     BOOK.exit()
-      .classed('selected', function(d) {
-        return d.selected;
-      })
       .remove();
   }
 
