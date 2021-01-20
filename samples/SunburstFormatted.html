@@ -14,7 +14,7 @@ limitations under the License.
 <html>
 <head>
   <!-- Import D3.js -->
-  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
 
   <!-- Import lodash.js -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/2.4.1/lodash.min.js"></script>
@@ -161,7 +161,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Format data using dollars
   var formatter= new Intl.NumberFormat('en-US', {
     style: 'currency',
-    currency: 'USD'
+    currency: 'USD',
   });
 
   // Dynamic dimension variables
@@ -576,7 +576,7 @@ document.addEventListener("DOMContentLoaded", function() {
     KEY_VALUE_TEXT.enter()
       .append("text")
       .classed("key-value-text", true)
-      .text("Total " + METADATA.value.label + ": " + ROOT.value)
+      .text("Total " + METADATA.value.label + ": " + formatter.format(ROOT.value)) //Change to use formatter.format
       .merge(KEY_VALUE_TEXT)
       .style("font-size", "1em")
       .style("font-size", function() {
@@ -770,7 +770,7 @@ document.addEventListener("DOMContentLoaded", function() {
     let fontSize;
     G_CHART_AREA.append("text")
       .classed("key-value-text", true)
-      .text("Total " + METADATA.value.label + ": " + ROOT.value)
+      .text("Total " + METADATA.value.label + ": " + formatter.format(ROOT.value)) //Change to use formatter.format
       .style("font-size", "1em")
       .style("font-size", function() {
         fontSize = (2 * INNER_RADIUS - 2 * KEY_VALUE_TEXT_PAD) / this.getComputedTextLength() + "em";
@@ -794,6 +794,8 @@ document.addEventListener("DOMContentLoaded", function() {
         const i = d3.interpolateNumber(oldVal, newVal);
         return function(t) {
           that.text("Total " + METADATA.value.label + ": " + formatter.format(i(t)));  //Change to use formatter.format
+          console.log(formatter.format(2300));
+          console.log(formatter.format(i(t)));
         };
       })
       .style("font-size", fontSize);
