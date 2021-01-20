@@ -14,121 +14,118 @@ limitations under the License.
 <html>
 <head>
   <!-- Import D3.js -->
-  <script type="text/javascript" src="https://d3js.org/d3.v5.min.js"></script>
+  <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
 
   <!-- Import utilities  -->
   <script type="text/javascript" src="../util/messagingUtil.js"></script>
   <script type="text/javascript" src="../util/contentUtil.js"></script>
 </head>
 <body>
+  <!-- CSS code -->
   <style type="text/css">
+
+  /* Define html, body, and svg element styles */
   html, body, svg {
-    overflow: hidden;
     margin: 0px;
     width: 100%;
     height: 100%;
   }
 
-  .data-bar {
-    fill: steelblue;
+  /* Define grid styles */
+  .grid{
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
+    grid-auto-rows: auto;
   }
 
-  .data-bar:hover {
-    fill: lightsteelblue;
-  }
-
-  .selectable.selected {
+  /* Define styles for brushing */
+  .selectable.brushed {
     stroke-width: 2px;
     stroke: red;
-  }
+  };
+
 </style>
 
 <script>
 "use strict";
 
+// Listening for HTML document completely loaded and parsed
 document.addEventListener("DOMContentLoaded", function() {
+
   /******************************************************* Declare variables *******************************************************/
 
-  // Static data variables
-  const SVG_ID = "dynamic-bar"; // ID of SVG element
+  // Sample data message to render outside of VA for debugging
   const SAMPLE_MESSAGE = {
     version: "1",
-    resultName: "dd75",
-    rowCount: 6,
-    availableRowCount: 6,
+    resultName: "sample",
+    rowCount: 5,
+    availableRowCount: 5,
     data: [
-      ["Hybrid", 3],
-      ["Sedan", 262],
-      ["Sports", 49],
-      ["SUV", 60],
-      ["Truck", 24],
-      ["Wagon", 30]
+      [
+      'https://images.gr-assets.com/books/1447303603m/2767052.jpg',
+       1,
+      "The Hunger Games (The Hunger Games, #1)"],
+      [
+       'https://images.gr-assets.com/books/1474154022m/3.jpg',
+       2,
+       "Harry Potter and the Sorcerer's Stone (Harry Potter, #1)"],
+      [
+       'https://images.gr-assets.com/books/1361039443m/41865.jpg',
+       3,
+       "Twilight (Twilight, #1)"],
+      [
+       'https://images.gr-assets.com/books/1361975680m/2657.jpg',
+       4,
+       "To Kill a Mockingbird"],
+      [
+       'https://images.gr-assets.com/books/1490528560m/4671.jpg',
+       5,
+       "The Great Gatsby"]
     ],
     columns: [
       {
-        name: "bi77",
-        label: "Type",
+        name: "image_url",
+        label: "image_url",
         type: "string"
       },
       {
-        name: "bi78",
-        label: "Frequency",
-        type: "number",
-        usage: "quantitative",
-        aggregation: "totalCount",
-        format: {
-          name: "COMMA",
-          width: 12,
-          precision: 0,
-          formatString: "COMMA12."
-        }
+        name: "id",
+        label: "id",
+        type: "string"
+      },
+      {
+        name:'title',
+        label: 'title',
+        type: 'string'
       }
     ]
-  }; // Sample data message to render graph outside of VA for debugging
+  };
 
   // Dynamic data variables
-  let VA_MESSAGE; // Data message to be received from VA
+  let VA_MESSAGE; // Data message from VA
   let VA_RESULT_NAME; // Result name required to send messages back to VA
   let DATA; // Data to be parsed from VA data message
 
-  // Static dimension variables
-  const TRANS_TIME = 500; // Duration of transitions
-  const EDGE_PADDING = 10; // Padding between end of axes and edge of SVG
-  const Y_AXIS_WIDTH = 30; // Width allocated for y-axis
-  const X_AXIS_HEIGHT = 30; // Height allocated for x-axis
-
-  // Dynamic dimension variables
-  let WIDTH; // Width of SVG element
-  let HEIGHT; // Height of SVG element
-  let CHART_WIDTH; // Width of chart area for bars
-  let CHART_HEIGHT; // Height of chart area for bars
-
   // Selection and d3 variables
-  let SVG; // SVG selection
-  let G_CHART_AREA; // Chart area group selection
-  let X_SCALE; // Band scale for x categories
-  let Y_SCALE; // Linear scale for bar heights
-  let X_AXIS; // X axis group data-join
-  let Y_AXIS; // Y axis group data join
-  let DATA_BARS; // Data bars data-join
+  let GRID; // Grid for book images
+  let BOOK; // Book data-join
+  let IMAGE; // Book image
 
   /*************************************************** Setup Callback Functions ***************************************************/
 
   // Attach event for data message from VA
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
-  // If not being rendered in iFrame (outside VA), render with sample data
-  if (!inIframe()) {
+  // If not being rendered in iFrame (outside of VA) or if there is no data, render with sample data
+  if (!inIframe() || !DATA) {
     onDataReceived(SAMPLE_MESSAGE);
   }
-
-  // Listen for resize event
-  va.contentUtil.setupResizeListener(drawElements);
 
   /****************************************************** Callback Functions ******************************************************/
 
   // Take action on received data
   function onDataReceived(messageFromVA) {
+
     // Initialize data variables
     VA_MESSAGE = messageFromVA;
     VA_RESULT_NAME = messageFromVA.resultName;
@@ -137,15 +134,16 @@ document.addEventListener("DOMContentLoaded", function() {
     if (
       !va.contentUtil.validateRoles(
         messageFromVA,
-        ["string", "number"],
+        ["string", "string",'string'],
         ["number"]
       )
     ) {
       va.messagingUtil.postInstructionalMessage(
         VA_RESULT_NAME,
-        "D3 Bar Chart expects columns to be assigned in this order:\n" +
-          " 1. Category (string)\n" +
-          " 2. Measure (number)"
+        "D3 Book Images expects columns to be assigned in this order:\n" +
+          " 1. Image URL (string)\n" +
+          " 2. ID (string)\n" +
+          " 3. Title (string)"
       );
       return;
     }
@@ -154,232 +152,90 @@ document.addEventListener("DOMContentLoaded", function() {
     DATA = [];
     for (let i = 0; i < VA_MESSAGE.data.length; i++) {
       DATA.push({
-        x: VA_MESSAGE.data[i][0],
-        y: VA_MESSAGE.data[i][1],
-        selected: VA_MESSAGE.data[i][2],
+        image_url: VA_MESSAGE.data[i][0],
+        id: VA_MESSAGE.data[i][1],
+        title: VA_MESSAGE.data[i][2],
+        brushed: VA_MESSAGE.data[i][3],
         index: i
       });
     }
 
     // Initialize chart if first draw, otherwise process data and update elements accordingly
-    if (d3.select("#" + SVG_ID).empty()) {
+    if (d3.select('div').empty()) {
       drawElements();
     } else {
       updateElements();
     }
   }
 
-  // Draw elements for first time and on resize event
+  // Draw elements for first time
   function drawElements() {
+
     // Return if data is not yet initialized
     if (!DATA) {
       return;
     }
 
-    // Calculate dimensions for graph based on container dimensions
-    WIDTH = window.innerWidth;
-    HEIGHT = window.innerHeight;
-    CHART_WIDTH = WIDTH - Y_AXIS_WIDTH - EDGE_PADDING;
-    CHART_HEIGHT = HEIGHT - X_AXIS_HEIGHT - EDGE_PADDING;
+    //Creates a grid
+    GRID=d3.select('body')
+               .append('div')
+                  .attr('id','grid')
+                  .attr('class','grid');
 
-    // Append svg and save reference
-    d3.select("body")
-      .selectAll("#" + SVG_ID)
-      .data([DATA])
-      .enter()
-      .append("svg")
-      .attr("id", SVG_ID)
-      .on("click", deselectAllElements);
+    //Adds g for each book
+    BOOK=GRID.selectAll('g')
+                 .data(DATA, function(d) {
+                   return d.id
+                 })
+                 .enter()
+                 .append('g')
+                    .attr('id','book');
 
-    SVG = d3
-      .select("#" + SVG_ID)
-      .attr("width", WIDTH)
-      .attr("height", HEIGHT);
+    //Adds image to each g
+    IMAGE=BOOK.append('svg')
+                    .attr('id','book-image')
+              .append('svg:image')
+              .classed('selectable', true)
+              .classed('brushed', function(d) {
+                  return d.brushed;
+              })
+                .attr('xlink:href', function(d) {
+                    return d.image_url;
+                  })
+                  .append('title')
+                  .text(function(d) {
+                    return d.title;
+                  });
 
-    // Append/update chart-area group and save reference
-    SVG.selectAll(".g-chart-area")
-      .data([DATA])
-      .enter()
-      .append("g")
-      .classed("g-chart-area", true)
-      .attr(
-        "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
-      );
-
-    G_CHART_AREA = SVG.select(".g-chart-area");
-
-    // Create x scale
-    X_SCALE = d3
-      .scaleBand()
-      .rangeRound([0, CHART_WIDTH])
-      .padding(0.1)
-      .domain(
-        DATA.map(function(d) {
-          return d.x;
-        })
-      );
-
-    // Create y scale
-    Y_SCALE = d3
-      .scaleLinear()
-      .rangeRound([CHART_HEIGHT, 0])
-      .domain([
-        0,
-        d3.max(DATA, function(d) {
-          return d.y;
-        })
-      ]);
-
-    // Create x axis
-    X_AXIS = SVG.selectAll(".x-axis").data([DATA]);
-
-    X_AXIS.enter()
-      .append("g")
-      .classed("x-axis", true)
-      .merge(X_AXIS)
-      .attr(
-        "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + (HEIGHT - X_AXIS_HEIGHT) + ")"
-      )
-      .call(d3.axisBottom(X_SCALE));
-
-    // Create y axis
-    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
-
-    Y_AXIS.enter()
-      .append("g")
-      .classed("y-axis", true)
-      .merge(Y_AXIS)
-      .attr(
-        "transform",
-        "translate(" + Y_AXIS_WIDTH + ", " + EDGE_PADDING + ")"
-      )
-      .call(d3.axisLeft(Y_SCALE));
-
-    // Create bars for each
-    DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
-      return d.x;
-    });
-
-    DATA_BARS.enter()
-      .append("rect")
-      .classed("data-bar", true)
-      .classed("selectable", true)
-      .classed("selected", function(d) {
-        return d.selected;
-      })
-      .on("click", selectElement)
-      .merge(DATA_BARS)
-      .attr("x", function(d) {
-        return X_SCALE(d.x);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.y);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .attr("height", function(d) {
-        return CHART_HEIGHT - Y_SCALE(d.y);
-      });
   }
 
   // Redraw data dependent elements on data change
   function updateElements() {
-    // Update x scale
-    X_SCALE = d3
-      .scaleBand()
-      .rangeRound([0, CHART_WIDTH])
-      .padding(0.1)
-      .domain(
-        DATA.map(function(d) {
-          return d.x;
-        })
-      );
 
-    // Update y scale
-    Y_SCALE = d3
-      .scaleLinear()
-      .rangeRound([CHART_HEIGHT, 0])
-      .domain([
-        0,
-        d3.max(DATA, function(d) {
-          return d.y;
-        })
-      ]);
+    BOOK=d3.select('#grid').selectAll('g')
+        .data(DATA, function(d) {
+          return d.id;
+        });
 
-    // Update x axis
-    X_AXIS = SVG.selectAll(".x-axis").data([DATA]);
+    // Enter/Update images
+    BOOK.enter()
+        .append('g')
+        .append('svg')
+      .append("svg:image")
+      .classed('selectable', true)
+      .classed('brushed', function(d) {
+        return d.brushed;
+      })
+      .attr('xlink:href', function(d) {
+        return d.image_url;
+      })
+      .append('title')
+      .text(function(d) {
+        return d.title;
+      });
 
-    X_AXIS.transition()
-      .duration(TRANS_TIME)
-      .call(d3.axisBottom(X_SCALE));
-
-    // Update x axis
-    Y_AXIS = SVG.selectAll(".y-axis").data([DATA]);
-
-    Y_AXIS.transition()
-      .duration(TRANS_TIME)
-      .call(d3.axisLeft(Y_SCALE));
-
-    // Enter/Update/Exit data bars
-    DATA_BARS = G_CHART_AREA.selectAll(".data-bar").data(DATA, function(d) {
-      return d.x;
-    });
-
-    DATA_BARS.classed("selected", function(d) {
-      return d.selected;
-    })
-      .transition()
-      .duration(TRANS_TIME)
-      .attr("x", function(d) {
-        return X_SCALE(d.x);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.y);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .attr("height", function(d) {
-        return CHART_HEIGHT - Y_SCALE(d.y);
-      })
-      .style("opacity", 1);
-
-    DATA_BARS.enter()
-      .append("rect")
-      .classed("data-bar", true)
-      .classed("selectable", true)
-      .classed("selected", function(d) {
-        return d.selected;
-      })
-      .attr("x", function(d) {
-        return X_SCALE(d.x);
-      })
-      .attr("y", function(d) {
-        return Y_SCALE(d.y);
-      })
-      .attr("width", function() {
-        return X_SCALE.bandwidth();
-      })
-      .attr("height", function(d) {
-        return CHART_HEIGHT - Y_SCALE(d.y);
-      })
-      .style("opacity", 0)
-      .on("click", selectElement)
-      .transition()
-      .duration(TRANS_TIME)
-      .style("opacity", 1);
-
-    DATA_BARS.exit()
-      .classed("selected", false)
-      .transition()
-      .duration(TRANS_TIME)
-      .attr("data-test", function() {
-        return 0;
-      })
-      .style("opacity", 0)
+    // Exit images
+    BOOK.exit()
       .remove();
   }
 
@@ -394,43 +250,6 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
-  // Deselect all on svg click
-  function deselectAllElements() {
-    // Deselect all elements
-    d3.selectAll(".selectable").classed("selected", false);
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
-  }
-
-  // Handle selection on element
-  function selectElement() {
-    // Prevent event from falling through to underlying elements
-    d3.event.stopPropagation();
-
-    // If control is held toggle selected on click preserving array, otherwise select only clicked element
-    if (d3.event.ctrlKey) {
-      // Toggle selection on clicked element
-      d3.select(this).classed("selected", !d3.select(this).classed("selected"));
-    } else {
-      // Deselect all elements
-      d3.selectAll(".selectable").classed("selected", false);
-
-      // Select clicked element
-      d3.select(this).classed("selected", true);
-    }
-
-    // Build array of selected elements
-    const selections = [];
-    d3.selectAll(".selectable").each(function(d) {
-      if (d3.select(this).classed("selected")) {
-        selections.push({ row: d.index });
-      }
-    });
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
-  }
 });
 </script>
 </body>
