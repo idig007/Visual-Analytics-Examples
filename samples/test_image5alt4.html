@@ -117,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function() {
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
   // If not being rendered in iFrame (outside of VA) or if there is no data, render with sample data
-  if (!inIframe() ) {
+  if (!inIframe() || !DATA) {
     onDataReceived(SAMPLE_MESSAGE);
   }
 
@@ -176,7 +176,7 @@ document.addEventListener("DOMContentLoaded", function() {
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid')
-                  ;//.on('click', deselectAllElements);
+                  .on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -185,17 +185,17 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book')
-                    .classed('selectable', true)
-                    .classed('selected', function(d) {
-                        return d.selected;
-                    });
+                    .attr('id','book');
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
-
-                  //  .on('click', selectElement)
+                    .classed('book-image', true)
+                    .classed('selectable', true)
+                    .classed('selected', function(d) {
+                        return d.selected;
+                    })
+                    .on('click', selectElement)
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
@@ -225,12 +225,13 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update images
     BOOK.enter()
         .append('g')
+
+        .append('svg')
+        .classed('book-image' true)
         .classed('selectable', true)
         .classed('selected', function(d) {
             return d.selected;
         })
-        .append('svg')
-
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
@@ -240,13 +241,19 @@ document.addEventListener("DOMContentLoaded", function() {
         return d.title;
       })
       .style('opacity', 0)
-      ;//.on('click', selectElement);
+      .on('click', selectElement)
+      .transition()
+      .duration(50)
+      .style('opacity', 1);
 
     // Exit images
     BOOK.exit()
     .classed('selected', false)
     .transition()
     .duration(50)
+    .attr('data-test', function() {
+      return 0;
+    })
     .style('opacity', 0)
       .remove();
   }
@@ -261,7 +268,7 @@ document.addEventListener("DOMContentLoaded", function() {
       return true;
     }
   }
-/*
+
   // Deselect all on svg click
   function deselectAllElements() {
     // Deselect all elements
@@ -274,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Handle selection on element
   function selectElement() {
     // Prevent event from falling through to underlying elements
-  //  d3.event.stopPropagation();
+    d3.event.stopPropagation();
 
     // If control is held toggle selected on click preserving array, otherwise select only clicked element
     if (d3.event.ctrlKey) {
@@ -299,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }
-  */
+  
 });
 </script>
 </body>
