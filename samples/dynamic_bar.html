@@ -230,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .classed('selected', function(d) {
             return d.selected;
         })
-              .on('click', selectElement)
+          //    .on('click', selectElement)
         .append('svg')
         .classed('book-image', true)
 
@@ -275,7 +275,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Handle selection on element
-  function selectElement() {
+  /*function selectElement() {
     // Prevent event from falling through to underlying elements
   //  d3.event.stopPropagation();
 
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
-  }
+  }*/
 
 });
 </script>
