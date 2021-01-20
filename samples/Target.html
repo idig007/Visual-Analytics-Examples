@@ -51,9 +51,9 @@ document.addEventListener("DOMContentLoaded", function() {
   // Sample data message to render outside of VA for debugging
   const SAMPLE_MESSAGE = {
     version: "1",
-    resultName: "dd75",
-    rowCount: 6,
-    availableRowCount: 6,
+    resultName: "sample",
+    rowCount: 5,
+    availableRowCount: 5,
     data: [
       [
       'https://images.gr-assets.com/books/1447303603m/2767052.jpg',
@@ -96,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function() {
   };
 
   // Dynamic data variables
-  let VA_MESSAGE; // Data message to be received from VA
+  let VA_MESSAGE; // Data message from VA
   let VA_RESULT_NAME; // Result name required to send messages back to VA
   let DATA; // Data to be parsed from VA data message
 
@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Attach event for data message from VA
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
-  // If not being rendered in iFrame (outside VA), render with sample data
+  // If not being rendered in iFrame (outside of VA) or if there is no data, render with sample data
   if (!inIframe() || !DATA) {
     onDataReceived(SAMPLE_MESSAGE);
   }
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function() {
         image_url: VA_MESSAGE.data[i][0],
         id: VA_MESSAGE.data[i][1],
         title: VA_MESSAGE.data[i][2],
-        selected: VA_MESSAGE.data[i][3],
+        brushed: VA_MESSAGE.data[i][3],
         index: i
       });
     }
