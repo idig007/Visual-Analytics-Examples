@@ -39,7 +39,7 @@ limitations under the License.
   }
 
   /* Define styles for brushing */
-  .selectable.brushed {
+  .selectable.selected {
     stroke-width: 2px;
     stroke: red;
   };
@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function() {
     IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
                     .classed('selectable', true)
-                    .classed('brushed', function(d) {
+                    .classed('selected', function(d) {
                         return d.brushed;
                     })
               .append('svg:image')
@@ -222,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .append('g')
         .append('svg')
         .classed('selectable', true)
-        .classed('brushed', function(d) {
+        .classed('selected', function(d) {
             return d.brushed;
         })
       .append("svg:image")
