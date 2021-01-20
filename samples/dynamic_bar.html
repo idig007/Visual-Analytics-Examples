@@ -177,7 +177,7 @@ document.addEventListener("DOMContentLoaded", function() {
                .append('div')
                   .attr('id','grid')
                   .attr('class','grid')
-                  .on('click', deselectAllElements);
+                  ;//.on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -266,14 +266,14 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   // Deselect all on svg click
-  function deselectAllElements() {
+/*  function deselectAllElements() {
     // Deselect all elements
     d3.selectAll(".selectable").classed("selected", false);
 
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
   }
-
+*/
   // Handle selection on element
   /*function selectElement() {
     // Prevent event from falling through to underlying elements
