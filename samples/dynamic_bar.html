@@ -188,7 +188,12 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book');
+                    .attr('id','book')
+                    .classed('selectable', true)
+                    .classed('selected', function(d) {
+                        return d.selected;
+                    })
+                                      .on('click', selectElement);
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
@@ -199,11 +204,8 @@ document.addEventListener("DOMContentLoaded", function() {
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
-                  .classed('selectable', true)
-                  .classed('selected', function(d) {
-                      return d.selected;
-                  })
-                  .on('click', selectElement)
+
+
                   .append('title')
                   .text(function(d) {
                     return d.title;
@@ -227,7 +229,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update images
     BOOK.enter()
         .append('g')
-
+        .classed('selectable', true)
+        .classed('selected', function(d) {
+            return d.selected;
+        })
+              .on('click', selectElement)
         .append('svg')
         .classed('book-image', true)
 
@@ -235,15 +241,12 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
-      .classed('selectable', true)
-      .classed('selected', function(d) {
-          return d.selected;
-      })
+
       .append('title')
       .text(function(d) {
         return d.title;
       })
-      .on('click', selectElement);
+;
 
     // Exit images
     BOOK.exit()
