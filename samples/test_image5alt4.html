@@ -163,8 +163,11 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
+      console.log(d.brushed);
     } else {
       updateElements();
+      console.log('update');
+      console.log(d.brushed);
     }
   }
 
@@ -192,12 +195,10 @@ document.addEventListener("DOMContentLoaded", function() {
                     .classed('selectable', true)
                     .classed('selected', function(d) {
                         return d.brushed;
-                        console.log(d.brushed);
                     })
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
-                    console.log(d.brushed);
                   })
                   .append('title')
                   .text(function(d) {
@@ -221,14 +222,10 @@ document.addEventListener("DOMContentLoaded", function() {
         .classed('selectable', true)
         .classed('selected', function(d) {
             return d.brushed;
-            console.log('update');
-            console.log(d.brushed);
         })
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
-        console.log('update');
-        console.log(d.brushed);
       })
       .append('title')
       .text(function(d) {
