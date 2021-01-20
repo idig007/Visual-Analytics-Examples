@@ -47,9 +47,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Sample data
   const SAMPLE_MESSAGE = {
     version: "1",
-    resultName: "dd75",
-    rowCount: 6,
-    availableRowCount: 6,
+    resultName: "sample",
+    rowCount: 5,
+    availableRowCount: 5,
     data: [
       [
       'https://images.gr-assets.com/books/1447303603m/2767052.jpg',
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', function() {
         image_url: SAMPLE_MESSAGE.data[i][0],
         id: SAMPLE_MESSAGE.data[i][1],
         title: SAMPLE_MESSAGE.data[i][2],
-        selected: SAMPLE_MESSAGE.data[i][3],
+        brushed: SAMPLE_MESSAGE.data[i][3],
         index: i
       });
     }
