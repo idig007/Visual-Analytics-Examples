@@ -40,12 +40,9 @@ limitations under the License.
 
   /* Define styles for brushing */
   .selected {
-    opacity: 1;
-  }
-
-  .notselected {
     opacity: 0.2;
   }
+
 
 
 </style>
@@ -194,7 +191,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  .append('g')
                     .attr('id','book')
                     .classed('selected', function(d) {
-                      return d.selected;
+                      return !d.selected;
                     });
 
     //Adds image to each g
@@ -224,9 +221,6 @@ document.addEventListener("DOMContentLoaded", function() {
           return d.id;
         })
         .classed('selected', function(d) {
-      return d.selected;
-    })
-    .classed('notselected', function(d) {
       return !d.selected;
     })
       ;
