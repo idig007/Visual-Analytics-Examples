@@ -813,7 +813,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const newVal = TRAIL_END.value / ROOT.value;
         const i = d3.interpolateNumber(oldVal, newVal);
         return function(t) {
-          that.text(TRAIL_END.value + " (" + FORMAT_PERCENT(i(t)) + ")");
+          that.text(formatter.format(TRAIL_END.value) + " (" + FORMAT_PERCENT(i(t)) + ")"); //Change to use formatter.format
         };
       });
   }
@@ -1301,7 +1301,7 @@ document.addEventListener("DOMContentLoaded", function() {
       .attr("dy", TRAIL_HEIGHT/2)
       .text(function(d) {
         TRAIL_END = d;
-        return d.value + " (" + FORMAT_PERCENT(d.value/ROOT.value) + ")";
+        return formatter.format(d.value) + " (" + FORMAT_PERCENT(d.value/ROOT.value) + ")"; //Change to use formatter.format
       });
   }
 
