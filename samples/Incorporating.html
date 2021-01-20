@@ -110,7 +110,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Attach event for data message from VA
   va.messagingUtil.setOnDataReceivedCallback(onDataReceived);
 
-  // If not being rendered in iFrame (outside of VA) or if there is no data, render with sample data
+  // If not being rendered in iFrame (outside of VA), render with sample data
   if (!inIframe()) {
     onDataReceived(SAMPLE_MESSAGE);
   }
