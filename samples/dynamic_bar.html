@@ -178,8 +178,7 @@ document.addEventListener("DOMContentLoaded", function() {
     GRID=d3.select('body')
                .append('div')
                   .attr('id','grid')
-                  .attr('class','grid')
-                  ;//.on('click', deselectAllElements);
+                  .attr('class','grid');
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -219,26 +218,25 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
-        .classed('selectable', true)
-        .classed('selected', function(d) {
-      return !d.selected;
-    });
+      ;
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
+        .classed('selectable', true)
+        .classed('selected', function(d) {
+      return !d.selected;
+    })
         .append('svg')
         .classed('book-image', true)
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
       })
-
       .append('title')
       .text(function(d) {
         return d.title;
-      })
-;
+      });
 
     // Exit images
     BOOK.exit()
