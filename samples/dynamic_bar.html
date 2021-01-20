@@ -187,11 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
                  })
                  .enter()
                  .append('g')
-                    .attr('id','book')
-                ;//    .classed('selectable', true)
-      /*              .classed('selected', function(d) {
-                        return d.selected;
-                    }); */
+                    .attr('id','book');
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
@@ -219,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
-        .classed('selected', false)
+        .classed('selected', 0)
         .classed('selectable', true)
         .classed('selected', function(d) {
       return !d.selected;
