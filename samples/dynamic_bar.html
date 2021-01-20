@@ -40,6 +40,10 @@ limitations under the License.
 
   /* Define styles for brushing */
   .selected {
+    opacity: 1;
+  }
+
+  .selected.neg {
     opacity: 0.2;
   };
 
@@ -218,7 +222,7 @@ document.addEventListener("DOMContentLoaded", function() {
         })
         .classed('selectable', false)
         .classed('selected', function(d) {
-      return !d.selected;
+      return d.selected;
     })
       ;
 
