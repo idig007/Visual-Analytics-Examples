@@ -217,9 +217,8 @@ document.addEventListener("DOMContentLoaded", function() {
     BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
           return d.id;
-        });
-
-    BOOK.classed('selected', function(d) {
+        })
+        .classed('selected', function(d) {
       return !d.selected;
     });
 
