@@ -197,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function() {
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
+                    console.log(d.brushed);
                   })
                   .append('title')
                   .text(function(d) {
@@ -226,6 +227,8 @@ document.addEventListener("DOMContentLoaded", function() {
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
+        console.log('update');
+        console.log(d.brushed);
       })
       .append('title')
       .text(function(d) {
