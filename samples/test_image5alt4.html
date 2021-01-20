@@ -227,7 +227,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .append('g')
 
         .append('svg')
-        .classed('book-image' true)
+        .classed('book-image', true)
         .classed('selectable', true)
         .classed('selected', function(d) {
             return d.selected;
@@ -306,7 +306,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Post message to VA
     va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }
-  
+
 });
 </script>
 </body>
