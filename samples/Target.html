@@ -202,6 +202,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Redraw data dependent elements on data change
   function updateElements() {
 
+    // Change in data (no enter or exit images)
     BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
           return d.id;
