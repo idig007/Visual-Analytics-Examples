@@ -215,7 +215,9 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
-        .classed('selected', 0)
+        .classed('selected', function() {
+          return 0;
+        })
         .classed('selectable', true)
         .classed('selected', function(d) {
       return !d.selected;
