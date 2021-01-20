@@ -218,15 +218,16 @@ document.addEventListener("DOMContentLoaded", function() {
         .data(DATA, function(d) {
           return d.id;
         })
+        .classed('selectable', true)
+        .classed('selected', function(d) {
+      return !d.selected;
+    })
       ;
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
-        .classed('selectable', true)
-        .classed('selected', function(d) {
-      return !d.selected;
-    })
+
         .append('svg')
         .classed('book-image', true)
       .append("svg:image")
@@ -240,7 +241,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Exit images
     BOOK.exit()
-  //  .classed('selected', false)
+    .classed('selected', false)
       .remove();
   }
 
