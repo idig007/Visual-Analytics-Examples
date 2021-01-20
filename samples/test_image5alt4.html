@@ -163,11 +163,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Initialize chart if first draw, otherwise process data and update elements accordingly
     if (d3.select('div').empty()) {
       drawElements();
-      console.log(d.brushed);
     } else {
       updateElements();
-      console.log('update');
-      console.log(d.brushed);
     }
   }
 
