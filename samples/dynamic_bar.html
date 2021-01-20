@@ -225,6 +225,7 @@ document.addEventListener("DOMContentLoaded", function() {
     // Enter/Update images
     BOOK.enter()
         .append('g')
+        .classed('selectable', true)
         .append('svg')
         .classed('book-image', true)
       .append("svg:image")
