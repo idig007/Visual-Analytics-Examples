@@ -158,6 +158,11 @@ document.addEventListener("DOMContentLoaded", function() {
   const TRAIL_MARKER_BOTTOM_PAD = 5; // Padding between trail markers and top of sunburst
   const ARROW_WIDTH = 15; // Pixel width of arrow on trail markers
   const KEY_VALUE_TEXT_PAD = 5; // Padding on either side of key value
+  // Format data using dollars
+  var formatter= new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD'
+  });
 
   // Dynamic dimension variables
   let WIDTH; // Width of SVG element
@@ -788,7 +793,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const newVal = ROOT.value;
         const i = d3.interpolateNumber(oldVal, newVal);
         return function(t) {
-          that.text("Total " + METADATA.value.label + ": " + parseInt(i(t)));
+          that.text("Total " + METADATA.value.label + ": " + formatter.format(i(t)));  //Change to use formatter.format
         };
       })
       .style("font-size", fontSize);
