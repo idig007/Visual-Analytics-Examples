@@ -40,7 +40,7 @@ limitations under the License.
 "use strict"; //best practice
 
   //Listening for HTML document completely loaded and parsed, best practice
-  document.addEventListener('DOMContentLoaded', function() {
+  //document.addEventListener('DOMContentLoaded', function() {
 
   /******************************************************* Declare variables *******************************************************/
 
@@ -66,11 +66,12 @@ limitations under the License.
   // Dynamic data variables
   let DATA; // Data to be parsed from VA data message
 
-  // Selection and d3 variables
+  // D3 variables
   let GRID; // Grid for book images
   let BOOK; // Book data-join
   let IMAGE; // Book image
 
+  // No data from VA, so display sample data
   DATA=SAMPLE_MESSAGE;
 
   // Create grid and add images
@@ -107,7 +108,7 @@ limitations under the License.
                   });
 
   }
-});
+//});
 
 </script>
 </body>
