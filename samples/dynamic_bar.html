@@ -40,9 +40,7 @@ limitations under the License.
 
   /* Define styles for brushing */
   .selectable.selected {
-    stroke-width: 18px;
-    stroke: red;
-    opacity: 0.5;
+    opacity: 0.2;
   };
 
 </style>
@@ -191,7 +189,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .attr('id','book')
                     .classed('selectable', true)
                     .classed('selected', function(d) {
-                        return d.selected=0;
+                        return d.selected;
                     })
                                       .on('click', selectElement);
 
@@ -223,7 +221,7 @@ document.addEventListener("DOMContentLoaded", function() {
         });
 
     BOOK.classed('selected', function(d) {
-      return d.selected=0;
+      return d.selected;
     });
 
     // Enter/Update images
@@ -231,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function() {
         .append('g')
         .classed('selectable', true)
         .classed('selected', function(d) {
-            return d.selected=0;
+            return d.selected;
         })
               .on('click', selectElement)
         .append('svg')
