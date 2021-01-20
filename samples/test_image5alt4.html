@@ -191,15 +191,16 @@ document.addEventListener("DOMContentLoaded", function() {
     IMAGE=BOOK.append('svg')
                     .attr('id','book-image')
                     .classed('book-image', true)
-                    .classed('selectable', true)
-                    .classed('selected', function(d) {
-                        return d.selected;
-                    })
-                    .on('click', selectElement)
+
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
+                  .classed('selectable', true)
+                  .classed('selected', function(d) {
+                      return d.selected;
+                  })
+                  .on('click', selectElement)
                   .append('title')
                   .text(function(d) {
                     return d.title;
@@ -228,13 +229,14 @@ document.addEventListener("DOMContentLoaded", function() {
 
         .append('svg')
         .classed('book-image', true)
-        .classed('selectable', true)
-        .classed('selected', function(d) {
-            return d.selected;
-        })
+
       .append("svg:image")
       .attr('xlink:href', function(d) {
         return d.image_url;
+      })
+      .classed('selectable', true)
+      .classed('selected', function(d) {
+          return d.selected;
       })
       .append('title')
       .text(function(d) {
@@ -281,7 +283,7 @@ document.addEventListener("DOMContentLoaded", function() {
   // Handle selection on element
   function selectElement() {
     // Prevent event from falling through to underlying elements
-    d3.event.stopPropagation();
+  //  d3.event.stopPropagation();
 
     // If control is held toggle selected on click preserving array, otherwise select only clicked element
     if (d3.event.ctrlKey) {
