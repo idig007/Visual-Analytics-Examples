@@ -32,7 +32,12 @@ limitations under the License.
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(98px, 1fr));
     grid-auto-rows: auto;
-  };
+  }
+
+  /* Define book-image styles */
+  .book-image{
+    width: 100%;
+  }
 
 </style>
 
@@ -134,8 +139,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-                .attr('id','book-image')
+
               .append('svg:image')
+              .classed('book-image', true)
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
