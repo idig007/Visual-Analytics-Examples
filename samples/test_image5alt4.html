@@ -194,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     .classed('selected', function(d) {
                         return d.brushed;
                     })
-                    .onclick('click', selectElement)
+                    .on('click', selectElement)
               .append('svg:image')
                 .attr('xlink:href', function(d) {
                     return d.image_url;
