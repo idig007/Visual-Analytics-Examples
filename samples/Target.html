@@ -172,28 +172,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Creates a grid
     GRID=d3.select('body')
-               .append('div')
-                  .attr('id','grid')
-                  .attr('class','grid');
+           .append('div')
+              .attr('id','grid')
+              .attr('class','grid');
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
-                 .data(DATA, function(d) {
-                   return d.id
-                 })
-                 .enter()
-                 .append('g')
-                    .attr('id','book');
+             .data(DATA, function(d) {
+                 return d.id
+               })
+             .enter()
+             .append('g');
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-                .append('svg:image')
-                  .classed('book-image', true)
-                  .attr('xlink:href', function(d) {
+              .append('svg:image')
+                .classed('book-image', true)
+                .attr('xlink:href', function(d) {
                       return d.image_url;
                   })
-                .append('title')
-                  .text(function(d) {
+              .append('title')
+                .text(function(d) {
                     return d.title;
                   });
 
@@ -205,22 +204,22 @@ document.addEventListener("DOMContentLoaded", function() {
     // Change in data (no enter or exit images)
     BOOK=d3.select('#grid').selectAll('g')
         .data(DATA, function(d) {
-          return d.id;
-        });
+            return d.id;
+         });
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
         .append('svg')
-      .append("svg:image")
-                  .classed('book-image', true)
-      .attr('xlink:href', function(d) {
-        return d.image_url;
-      })
-      .append('title')
-      .text(function(d) {
-        return d.title;
-      });
+        .append("svg:image")
+          .classed('book-image', true)
+          .attr('xlink:href', function(d) {
+              return d.image_url;
+            })
+        .append('title')
+          .text(function(d) {
+              return d.title;
+            });
 
     // Exit images
     BOOK.exit()
