@@ -88,8 +88,8 @@ limitations under the License.
     //Creates a grid
     GRID=d3.select('body')
            .append('div')
-           .attr('id','grid')
-           .attr('class','grid');
+              .attr('id','grid')
+              .attr('class','grid');
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -97,12 +97,10 @@ limitations under the License.
                 return d.id
               })
              .enter()
-             .append('g')
-                .attr('id','book');
+             .append('g');
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-
               .append('svg:image')
                 .classed('book-image', true)
                 .attr('xlink:href', function(d) {
