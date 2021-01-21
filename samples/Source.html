@@ -182,34 +182,33 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Creates a grid
     GRID=d3.select('body')
-               .append('div')
-                  .attr('id','grid')
-                  .attr('class','grid')
-                  .on('click', deselectAllElements);
+           .append('div')
+              .attr('id','grid')
+              .attr('class','grid')
+              .on('click', deselectAllElements);
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
-                 .data(DATA, function(d) {
-                   return d.id
-                 })
-                 .enter()
-                 .append('g')
-                    .attr('id','book')
-                    .classed('selectable', true)
-                    .classed('brushed', function(d) {
-                      return d.brushed;
-                    })
-                    .on('click', selectElement);
+             .data(DATA, function(d) {
+                 return d.id
+               })
+             .enter()
+             .append('g')
+                .classed('selectable', true)
+                .classed('brushed', function(d) {
+                    return d.brushed;
+                  })
+                .on('click', selectElement);
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
               .append('svg:image')
-              .classed('book-image', true)
+                .classed('book-image', true)
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
-                  .append('title')
-                  .text(function(d) {
+              .append('title')
+                .text(function(d) {
                     return d.title;
                   });
 
@@ -219,30 +218,31 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateElements() {
 
     // Change in data (no enter or exit images)
-    BOOK=d3.select('#grid').selectAll('g')
-        .data(DATA, function(d) {
-          return d.id;
-        })
-        .classed('selectable', true)
-        .classed('brushed', function(d) {
-            return d.brushed;
-        })
-        .on('click', selectElement);
+    BOOK=d3.select('#grid')
+           .selectAll('g')
+           .data(DATA, function(d) {
+              return d.id;
+            })
+              .classed('selectable', true)
+              .classed('brushed', function(d) {
+                  return d.brushed;
+                })
+              .on('click', selectElement);
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
-        .classed('selectable', true)
-        .classed('brushed', function(d) {
-          return d.brushed;
-        })
-        .on('click', selectElement)
+          .classed('selectable', true)
+          .classed('brushed', function(d) {
+              return d.brushed;
+            })
+            .on('click', selectElement)
         .append('svg')
         .append("svg:image")
-              .classed('book-image', true)
-              .attr('xlink:href', function(d) {
-                return d.image_url;
-              })
+          .classed('book-image', true)
+          .attr('xlink:href', function(d) {
+              return d.image_url;
+            })
         .append('title')
           .text(function(d) {
             return d.title;
@@ -250,8 +250,8 @@ document.addEventListener("DOMContentLoaded", function() {
 
     // Exit images
     BOOK.exit()
-    .classed('brushed', false)
-      .remove();
+        .classed('brushed', false)
+        .remove();
   }
 
   /******************************************************* Helper Functions *******************************************************/
