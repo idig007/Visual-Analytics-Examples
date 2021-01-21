@@ -48,11 +48,6 @@ limitations under the License.
     border: 5px solid red;
   }
 
-  /* Define styles for selecting an image */
-  .selectable.brushed {
-    border: 5px solid blue;
-  }
-
 </style>
 
 <script>
@@ -184,8 +179,7 @@ document.addEventListener("DOMContentLoaded", function() {
     GRID=d3.select('body')
            .append('div')
               .attr('id','grid')
-              .attr('class','grid')
-              .on('click', deselectAllElements);
+              .attr('class','grid');
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
@@ -194,11 +188,9 @@ document.addEventListener("DOMContentLoaded", function() {
                })
              .enter()
              .append('g')
-                .classed('selectable', true)
                 .classed('brushed', function(d) {
                     return d.brushed;
-                  })
-                .on('click', selectElement);
+                 });
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
@@ -208,7 +200,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     return d.image_url;
                   })
               .append('title')
-                .text(function(d) {
+                  .text(function(d) {
                     return d.title;
                   });
 
@@ -223,26 +215,22 @@ document.addEventListener("DOMContentLoaded", function() {
            .data(DATA, function(d) {
               return d.id;
             })
-              .classed('selectable', true)
               .classed('brushed', function(d) {
                   return d.brushed;
-                })
-              .on('click', selectElement);
+                });
 
     // Enter/Update images
     BOOK.enter()
         .append('g')
-          .classed('selectable', true)
           .classed('brushed', function(d) {
-              return d.brushed;
-            })
-            .on('click', selectElement)
+            return d.brushed;
+          })
         .append('svg')
         .append("svg:image")
           .classed('book-image', true)
           .attr('xlink:href', function(d) {
               return d.image_url;
-            })
+           })
         .append('title')
           .text(function(d) {
             return d.title;
@@ -263,44 +251,6 @@ document.addEventListener("DOMContentLoaded", function() {
     } catch (e) {
       return true;
     }
-  }
-
-  // Deselect all on body click
-  function deselectAllElements() {
-    // Deselect all elements
-    d3.selectAll(".selectable").classed("brushed", false);
-
-    // Post message to VA that no elements are selected
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, []);
-  }
-
-  // Handle selection on element
-  function selectElement() {
-    // Prevent event from falling through to underlying elements
-    event.stopPropagation();
-
-    // If control is held toggle selected on click preserving array, otherwise select only clicked element
-    if (event.ctrlKey) {
-      // Toggle selection on clicked element
-      d3.select(this).classed("brushed", !d3.select(this).classed("brushed"));
-    } else {
-      // Deselect all elements
-      d3.selectAll(".selectable").classed("brushed", false);
-
-      // Select clicked element
-      d3.select(this).classed("brushed", true);
-    }
-
-    // Build array of selected elements
-    const selections = [];
-    d3.selectAll(".selectable").each(function(d) {
-      if (d3.select(this).classed("brushed")) {
-        selections.push({ row: d.index });
-      }
-    });
-
-    // Post message to VA
-    va.messagingUtil.postSelectionMessage(VA_RESULT_NAME, selections);
   }
 
 });
