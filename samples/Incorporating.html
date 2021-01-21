@@ -173,29 +173,27 @@ document.addEventListener("DOMContentLoaded", function() {
 
     //Creates a grid
     GRID=d3.select('body')
-               .append('div')
-                  .attr('id','grid')
-                  .attr('class','grid');
+           .append('div')
+              .attr('id','grid')
+              .attr('class','grid');
 
     //Adds g for each book
     BOOK=GRID.selectAll('g')
-                 .data(DATA, function(d) {
-                   return d.id
-                 })
-                 .enter()
-                 .append('g')
-                    .attr('id','book');
+             .data(DATA, function(d) {
+                return d.id
+              })
+             .enter()
+             .append('g');
 
     //Adds image to each g
     IMAGE=BOOK.append('svg')
-
-                .append('svg:image')
-              .classed('book-image', true)
+              .append('svg:image')
+                .classed('book-image', true)
                 .attr('xlink:href', function(d) {
                     return d.image_url;
                   })
-                  .append('title')
-                  .text(function(d) {
+              .append('title')
+                .text(function(d) {
                     return d.title;
                   });
 
