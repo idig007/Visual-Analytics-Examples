@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+Copyright 2018 SAS Institute Inc.
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+https://www.apache.org/licenses/LICENSE-2.0
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+-->
+<html>
+<head>
+  <!-- Import D3.js -->
+  <script type="text/javascript" src="https://d3js.org/d3.v6.min.js"></script>
+
+  <!-- Import utilities  -->
+  <script async src="https://unpkg.com/@sassoftware/va-report-components@0.7.2/dist/umd/va-report-components.js"></script>
+</head>
+<body>
+  <!-- CSS code -->
+  <style type="text/css">
+
+  /* Define html, body, and svg element styles */
+  html, body {
+    margin: 0px;
+    width: 100%;
+    height: 100%;
+  }
+
+
+</style>
+<div id="main" class="container">
+      <h1>2019 Novel Coronavirus</h1>
+      <p id="content-desktop">In December 2019, a new respiratory disease was discovered in Wuhan, China. The illness is caused by a new type of coronavirus, known as “severe acute respiratory syndrome coronavirus 2,” or SARS-CoV-2. The illness that can result from this virus infection is called “coronavirus disease 2019,” or COVID-19. On March 11, 2020 – <a href="https://www.who.int/emergencies/diseases/novel-coronavirus-2019"> WHO </a> declared the outbreak a global pandemic. This report uses SAS® Viya to visualize metrics and trends related to the COVID-19 pandemic.
+      </p>
+        <div class="d-flex justify-content-center"><sas-report-object objectName="ve107362" authenticationType="guest" url="https://tbub.sas.com" reportUri="/reports/reports/f69dd29c-8ed6-4201-97fa-ae29a7fd8c01"></sas-report-object>
+      </div>
+  </div>
+
+<div id="main" class="container" style="margin-bottom:50px;">
+    <a class="anchor" id="sect01"></a>
+    <h2>Key Stats</h2>
+    <p>The total number of confirmed cases of SARS-CoV-2 is shown below in blue. The total number of patient deaths is shown in red.</p>
+    <div class="row key-val-main">
+         <div class="column">
+        </div>
+        <!--confirmed cases-->
+        <div class="column">
+            <sas-report-object objectName="ve76867" authenticationType="guest" url="https://tbub.sas.com" reportUri="/reports/reports/f69dd29c-8ed6-4201-97fa-ae29a7fd8c01" style="height: 200px; width: 500px;"></sas-report-object>
+        </div>
+        <!--Death cases-->
+        <div class="column">
+            <sas-report-object objectName="ve76877" authenticationType="guest" url="https://tbub.sas.com" reportUri="/reports/reports/f69dd29c-8ed6-4201-97fa-ae29a7fd8c01" style="height: 200px; width: 500px;"></sas-report-object>
+        </div>
+    </div>
+    <!--Collective Insights -->
+     <div class="row">
+        <div class="col-lg-12">
+            <sas-report-object objectName="ve48966" authenticationType="guest" url="https://tbub.sas.com" reportUri="/reports/reports/f69dd29c-8ed6-4201-97fa-ae29a7fd8c01"></sas-report-object>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <sas-report-object objectName="ve48979" authenticationType="guest" url="https://tbub.sas.com" reportUri="/reports/reports/f69dd29c-8ed6-4201-97fa-ae29a7fd8c01"></sas-report-object>
+        </div>
+    </div>
+	<div class="row">
+        <div class="col-lg-12">
+            <sas-report-object objectName="ve26" authenticationType="guest" url="https://itviya.sas.com" reportUri="/reports/reports/fe94fe75-d27d-4cd4-b437-60c451438a4b"></sas-report-object>
+        </div>
+    </div>
+  </div>
+
+<script>
+"use strict";
+
+
+
+</script>
+</body>
+</html>
